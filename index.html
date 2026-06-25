@@ -6,7 +6,7 @@
     <title>免费节点订阅 - 自动化服务</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0a0a0b;
@@ -19,7 +19,6 @@
             --accent-orange-light: #ff8c5a;
             --accent-orange-glow: rgba(255, 107, 53, 0.15);
             --border-color: #27272a;
-            --grid-color: rgba(255, 107, 53, 0.03);
         }
 
         * {
@@ -32,190 +31,148 @@
             font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.6;
-            position: relative;
             overflow-x: hidden;
         }
 
-        .sparkles-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+        /* Cover Section */
+        .cover-section {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
 
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--accent-orange);
-            border-radius: 50%;
-            opacity: 0;
-            animation: sparkle 4s ease-in-out infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% {
-                opacity: 0.8;
-                transform: scale(1);
-            }
-        }
-
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-        }
-
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 100px 40px;
-        }
-
-        .header {
-            margin-bottom: 80px;
+        .cover-content {
             text-align: center;
+            z-index: 10;
+            padding: 40px;
         }
 
-        .header h1 {
-            font-size: 52px;
+        .cover-title {
+            font-size: 64px;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 50%, #ffc107 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 60px var(--accent-orange-glow);
+            animation: fadeInUp 1s ease-out;
         }
 
-        .header p {
-            font-size: 18px;
+        .cover-subtitle {
+            font-size: 20px;
             color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.8;
+            margin-bottom: 48px;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 80px;
-        }
-
-        .stat-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            padding: 32px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .stat-card::before {
-            content: '';
+        .scroll-indicator {
             position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--accent-orange);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            margin-top: 8px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Wavy Background */
+        .wavy-bg {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, var(--accent-orange-glow) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
         }
 
-        .stat-card:hover::before {
-            opacity: 1;
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            animation: wave 15s ease-in-out infinite;
         }
 
-        .stat-card:hover {
-            border-color: var(--accent-orange);
-            box-shadow: 0 0 50px var(--accent-orange-glow), 0 0 100px rgba(255, 107, 53, 0.1);
-            transform: translateY(-4px);
+        .wave:nth-child(1) {
+            top: -50%;
+            left: -50%;
+            animation-delay: 0s;
         }
 
-        .stat-value {
-            font-family: 'Noto Sans SC', monospace;
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--accent-orange);
-            margin-bottom: 8px;
-            text-shadow: 0 0 30px var(--accent-orange-glow);
+        .wave:nth-child(2) {
+            top: -30%;
+            left: -30%;
+            animation-delay: -5s;
+            opacity: 0.5;
         }
 
-        .stat-label {
-            font-size: 15px;
-            color: var(--text-muted);
-            font-weight: 500;
+        .wave:nth-child(3) {
+            top: -70%;
+            left: -70%;
+            animation-delay: -10s;
+            opacity: 0.3;
         }
 
-        .subscriptions-section {
-            margin-bottom: 80px;
+        @keyframes wave {
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.2);
+            }
         }
 
-        .section-title {
-            font-size: 14px;
-            color: var(--text-muted);
-            letter-spacing: 0.15em;
-            margin-bottom: 28px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-weight: 500;
+        /* Main Content */
+        .main-content {
+            min-height: 100vh;
+            position: relative;
+            z-index: 5;
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--border-color), transparent);
-        }
-
-        .subscription-card {
+        /* Cards */
+        .card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            margin-bottom: 20px;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .subscription-card::after {
+        .card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -224,117 +181,208 @@
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--accent-orange), transparent);
             opacity: 0;
-            transition: opacity 0.5s;
+            transition: opacity 0.4s;
         }
 
-        .subscription-card:hover::after {
+        .card:hover::before {
             opacity: 1;
         }
 
-        .subscription-card:hover {
+        .card:hover {
             border-color: rgba(255, 107, 53, 0.5);
             box-shadow: 0 8px 40px rgba(255, 107, 53, 0.15);
+            transform: translateY(-4px);
         }
 
-        .card-header {
-            padding: 28px 32px;
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 8px;
+            text-shadow: 0 0 30px var(--accent-orange-glow);
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Terminal Style */
+        .terminal {
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 12px 16px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+
+        .terminal-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-left: 12px;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            word-break: break-all;
+        }
+
+        .terminal-body .prompt {
+            color: var(--accent-orange);
+        }
+
+        /* 3D Animated Pin */
+        .pin-container {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .pin {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px var(--accent-orange-glow);
+            animation: pinFloat 3s ease-in-out infinite;
+        }
+
+        .pin:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        .pin-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .pin-label {
+            position: absolute;
+            right: 100px;
+            background: var(--bg-secondary);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-orange);
+            white-space: nowrap;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .pin:hover .pin-label {
+            opacity: 1;
+        }
+
+        @keyframes pinFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Subscription Cards */
+        .subscription-card {
             cursor: pointer;
         }
 
-        .card-title {
+        .subscription-header {
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
-        .card-icon {
+        .subscription-icon {
             width: 56px;
             height: 56px;
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
             font-weight: 700;
             color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px var(--accent-orange-glow);
         }
 
-        .card-info h3 {
+        .subscription-info h3 {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 6px;
-            color: var(--text-primary);
         }
 
-        .card-info span {
+        .subscription-info span {
             font-size: 14px;
             color: var(--text-muted);
         }
 
-        .card-action {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--accent-orange);
-            font-size: 14px;
-            font-weight: 500;
-            padding: 10px 20px;
-            background: rgba(255, 107, 53, 0.1);
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .subscription-card:hover .card-action {
-            background: var(--accent-orange);
-            color: white;
-        }
-
-        .card-content {
-            padding: 0 32px 32px;
+        .subscription-content {
             display: none;
+            margin-top: 24px;
         }
 
-        .subscription-card.active .card-content {
+        .subscription-card.active .subscription-content {
             display: block;
         }
 
-        .url-container {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            padding: 20px 24px;
-            margin-bottom: 24px;
-            position: relative;
-            border-radius: 8px;
-        }
-
-        .url-label {
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: var(--bg-primary);
-            padding: 0 12px;
-            font-size: 12px;
-            color: var(--accent-orange);
-            font-weight: 500;
-            letter-spacing: 0.05em;
-        }
-
-        .url-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            word-break: break-all;
-            line-height: 1.6;
-            font-family: 'Noto Sans SC', monospace;
-        }
-
-        .button-group {
+        /* Buttons */
+        .btn-group {
             display: flex;
             gap: 16px;
+            margin-top: 24px;
         }
 
         .btn {
@@ -349,7 +397,7 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: inherit;
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .btn-primary {
@@ -372,34 +420,9 @@
         .btn-secondary:hover {
             border-color: var(--accent-orange);
             color: var(--accent-orange);
-            box-shadow: 0 4px 20px var(--accent-orange-glow);
         }
 
-        .instructions {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            padding: 48px;
-            border-radius: 16px;
-        }
-
-        .instructions h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 32px;
-            color: var(--accent-orange);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .instructions h3::before {
-            content: '';
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
-            border-radius: 6px;
-        }
-
+        /* Instructions */
         .instructions-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -410,15 +433,6 @@
             display: flex;
             gap: 16px;
             padding: 20px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .instruction-item:hover {
-            border-color: var(--accent-orange);
-            box-shadow: 0 4px 20px var(--accent-orange-glow);
         }
 
         .instruction-num {
@@ -439,9 +453,10 @@
             font-weight: 600;
         }
 
+        /* Footer */
         .footer {
-            margin-top: 100px;
-            padding-top: 48px;
+            margin-top: 80px;
+            padding-top: 40px;
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -457,17 +472,6 @@
             color: var(--accent-orange);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .footer-left a:hover {
-            color: var(--accent-orange-light);
-        }
-
-        .footer-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
         }
 
         .update-info {
@@ -478,12 +482,8 @@
             color: var(--text-muted);
             background: var(--bg-secondary);
             padding: 10px 20px;
-            border: 1px solid var(--border-color);
             border-radius: 8px;
-        }
-
-        .update-info .label {
-            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
         }
 
         .update-info .value {
@@ -491,13 +491,10 @@
             font-weight: 600;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 60px 20px;
-            }
-
-            .header h1 {
-                font-size: 34px;
+            .cover-title {
+                font-size: 40px;
             }
 
             .stats-grid {
@@ -508,188 +505,186 @@
                 grid-template-columns: 1fr;
             }
 
-            .footer {
-                flex-direction: column;
-                gap: 24px;
-                text-align: center;
+            .pin-container {
+                display: none;
             }
 
-            .button-group {
-                flex-direction: column;
+            .main-content {
+                padding: 40px 20px;
             }
 
-            .card-header {
+            .btn-group {
                 flex-direction: column;
-                gap: 20px;
-                align-items: flex-start;
             }
         }
     </style>
 </head>
 <body>
-    <div class="sparkles-container" id="sparkles"></div>
-    <div class="noise-overlay"></div>
-    <div class="grid-overlay"></div>
+    <!-- Wavy Background -->
+    <div class="wavy-bg">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 
-    <div class="container">
-        <header class="header">
-            <h1>免费节点订阅</h1>
-            <p>自动化抓取 · 智能去重 · 每日更新<br>安静、持续、稳定运行，全程无需干预</p>
-        </header>
+    <!-- Cover Section -->
+    <section class="cover-section">
+        <div class="cover-content">
+            <h1 class="cover-title">免费节点订阅</h1>
+            <p class="cover-subtitle">自动化抓取 · 智能去重 · 每日更新<br>安静、持续、稳定运行，全程无需干预</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>下滑查看详情</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
 
+    <!-- 3D Animated Pin -->
+    <div class="pin-container">
+        <div class="pin" onclick="scrollToTutorial()">
+            <div class="pin-icon">📚</div>
+            <div class="pin-label">查看教程</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Stats -->
         <div class="stats-grid">
-            <div class="stat-card">
+            <div class="card stat-card">
                 <div class="stat-value" id="clash-count">--</div>
                 <div class="stat-label">Clash 节点</div>
             </div>
-            <div class="stat-card">
+            <div class="card stat-card">
                 <div class="stat-value" id="v2ray-count">--</div>
                 <div class="stat-label">V2Ray 节点</div>
             </div>
-            <div class="stat-card">
+            <div class="card stat-card">
                 <div class="stat-value">每日</div>
                 <div class="stat-label">自动更新</div>
             </div>
         </div>
 
-        <section class="subscriptions-section">
-            <div class="section-title">订阅地址</div>
-
-            <div class="subscription-card active" id="clash-card">
-                <div class="card-header" onclick="toggleCard('clash-card')">
-                    <div class="card-title">
-                        <div class="card-icon">CL</div>
-                        <div class="card-info">
-                            <h3>Clash / Mihomo</h3>
-                            <span>YAML 格式 · 自动选择节点</span>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <span>展开</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div class="url-container">
-                        <div class="url-label">订阅地址</div>
-                        <div class="url-text" id="clash-url">https://kunkun8888666.github.io/youyapai/output/clash.yaml</div>
-                    </div>
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="copyUrl('clash-url', event)">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2"/>
-                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                            </svg>
-                            复制链接
-                        </button>
-                        <a href="https://kunkun8888666.github.io/youyapai/output/clash.yaml" class="btn btn-secondary" download>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                            </svg>
-                            下载文件
-                        </a>
-                    </div>
+        <!-- Subscriptions -->
+        <div class="card subscription-card active" id="clash-card">
+            <div class="subscription-header" onclick="toggleCard('clash-card')">
+                <div class="subscription-icon">CL</div>
+                <div class="subscription-info">
+                    <h3>Clash / Mihomo</h3>
+                    <span>YAML 格式 · 自动选择节点</span>
                 </div>
             </div>
-
-            <div class="subscription-card" id="v2ray-card">
-                <div class="card-header" onclick="toggleCard('v2ray-card')">
-                    <div class="card-title">
-                        <div class="card-icon">V2</div>
-                        <div class="card-info">
-                            <h3>V2Ray / 影梭</h3>
-                            <span>URI 列表格式 · 广泛兼容</span>
-                        </div>
+            <div class="subscription-content">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <div class="terminal-title">订阅地址</div>
                     </div>
-                    <div class="card-action">
-                        <span>展开</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                    <div class="terminal-body">
+                        <span class="prompt">$ </span>curl -o clash.yaml <span id="clash-url">https://kunkun8888666.github.io/youyapai/output/clash.yaml</span>
                     </div>
                 </div>
-                <div class="card-content">
-                    <div class="url-container">
-                        <div class="url-label">订阅地址</div>
-                        <div class="url-text" id="v2ray-url">https://kunkun8888666.github.io/youyapai/output/v2ray.yaml</div>
-                    </div>
-                    <div class="button-group">
-                        <button class="btn btn-primary" onclick="copyUrl('v2ray-url', event)">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2"/>
-                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                            </svg>
-                            复制链接
-                        </button>
-                        <a href="https://kunkun8888666.github.io/youyapai/output/v2ray.yaml" class="btn btn-secondary" download>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                            </svg>
-                            下载文件
-                        </a>
-                    </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="copyUrl('clash-url', event)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2"/>
+                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                        </svg>
+                        复制链接
+                    </button>
+                    <a href="https://kunkun8888666.github.io/youyapai/output/clash.yaml" class="btn btn-secondary" download>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                        </svg>
+                        下载文件
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <div class="instructions">
-            <h3>使用说明</h3>
+        <div class="card subscription-card" id="v2ray-card">
+            <div class="subscription-header" onclick="toggleCard('v2ray-card')">
+                <div class="subscription-icon">V2</div>
+                <div class="subscription-info">
+                    <h3>V2Ray / 影梭</h3>
+                    <span>URI 列表格式 · 广泛兼容</span>
+                </div>
+            </div>
+            <div class="subscription-content">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <div class="terminal-title">订阅地址</div>
+                    </div>
+                    <div class="terminal-body">
+                        <span class="prompt">$ </span>curl -o v2ray.yaml <span id="v2ray-url">https://kunkun8888666.github.io/youyapai/output/v2ray.yaml</span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="copyUrl('v2ray-url', event)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2"/>
+                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                        </svg>
+                        复制链接
+                    </button>
+                    <a href="https://kunkun8888666.github.io/youyapai/output/v2ray.yaml" class="btn btn-secondary" download>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                        </svg>
+                        下载文件
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="card">
+            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 32px; color: var(--accent-orange);">使用说明</h3>
             <div class="instructions-grid">
-                <div class="instruction-item">
+                <div class="card instruction-item">
                     <span class="instruction-num">01</span>
                     <span class="instruction-text"><strong>Clash</strong> — 复制订阅地址，打开 Clash 或 Mihomo，粘贴导入。默认启用节点自动选择。</span>
                 </div>
-                <div class="instruction-item">
+                <div class="card instruction-item">
                     <span class="instruction-num">02</span>
                     <span class="instruction-text"><strong>V2Ray</strong> — 适用于 V2RayN、V2RayNG、Shadowrocket 等支持 URI 导入的客户端。</span>
                 </div>
-                <div class="instruction-item">
+                <div class="card instruction-item">
                     <span class="instruction-num">03</span>
                     <span class="instruction-text"><strong>自动更新</strong> — 节点每日北京时间 07:00 自动刷新，建议客户端设置同步更新。</span>
                 </div>
-                <div class="instruction-item">
+                <div class="card instruction-item">
                     <span class="instruction-num">04</span>
                     <span class="instruction-text"><strong>智能去重</strong> — 重复节点自动去除，确保每个节点唯一可用。</span>
                 </div>
             </div>
         </div>
 
+        <!-- Footer -->
         <footer class="footer">
             <div class="footer-left">
                 项目地址 <a href="https://github.com/kunkun8888666/youyapai" target="_blank">GitHub</a>
             </div>
-            <div class="footer-right">
-                <div class="update-info">
-                    <span class="label">最后更新：</span>
-                    <span class="value" id="update-date">--</span>
-                </div>
+            <div class="update-info">
+                <span>最后更新：</span>
+                <span class="value" id="update-date">--</span>
             </div>
         </footer>
-    </div>
+    </main>
 
     <script>
-        function createSparkles() {
-            const container = document.getElementById('sparkles');
-            const sparkleCount = 30;
-
-            for (let i = 0; i < sparkleCount; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.animationDelay = Math.random() * 4 + 's';
-                sparkle.style.animationDuration = (3 + Math.random() * 2) + 's';
-                container.appendChild(sparkle);
-            }
-        }
-
         async function loadStats() {
             try {
                 const response = await fetch('https://kunkun8888666.github.io/youyapai/output/stats.json');
                 const stats = await response.json();
-
+                
                 document.getElementById('clash-count').textContent = stats.clash_nodes;
                 document.getElementById('v2ray-count').textContent = stats.v2ray_nodes;
                 document.getElementById('update-date').textContent = stats.update_date;
@@ -710,7 +705,7 @@
             event.stopPropagation();
             const urlElement = document.getElementById(elementId);
             const url = urlElement.textContent.trim();
-
+            
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(url).then(() => {
                     showCopyFeedback(event.target);
@@ -740,17 +735,18 @@
             const originalText = button.innerHTML;
             button.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 已复制';
             button.style.background = '#22c55e';
-
+            
             setTimeout(() => {
                 button.innerHTML = originalText;
                 button.style.background = '';
             }, 2000);
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            createSparkles();
-            loadStats();
-        });
+        function scrollToTutorial() {
+            alert('教程页面即将上线，敬请期待！');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadStats);
     </script>
 </body>
 </html>
