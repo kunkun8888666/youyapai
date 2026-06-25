@@ -19,6 +19,8 @@
             --accent-orange-light: #ff8c5a;
             --accent-orange-glow: rgba(255, 107, 53, 0.15);
             --border-color: #27272a;
+            --grid-color: rgba(255, 107, 53, 0.03);
+            --dot-color: rgba(255, 107, 53, 0.05);
         }
 
         * {
@@ -34,11 +36,38 @@
             overflow-x: hidden;
         }
 
+        /* Grid and Dot Backgrounds */
+        .grid-dot-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .grid-dot-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
         /* Cover Section */
         .cover-section {
             height: 100vh;
             position: relative;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
@@ -50,104 +79,89 @@
             padding: 40px;
         }
 
+        .cover-title-wrapper {
+            margin-bottom: 24px;
+        }
+
         .cover-title {
             font-size: 64px;
             font-weight: 700;
-            margin-bottom: 24px;
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 50%, #ffc107 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeInUp 1s ease-out;
         }
+
+        .flip-word {
+            display: inline-block;
+            font-size: 64px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 50%, #ffc107 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: flipWords 4s ease-in-out infinite;
+        }
+
+        @keyframes flipWords {
+            0%, 100% { opacity: 1; transform: translateY(0); }
+            25% { opacity: 0; transform: translateY(-20px); }
+            50% { opacity: 0; transform: translateY(-20px); }
+            75% { opacity: 1; transform: translateY(0); }
+        }
+
+        .flip-word:nth-child(2) { animation-delay: 1s; }
+        .flip-word:nth-child(3) { animation-delay: 2s; }
+        .flip-word:nth-child(4) { animation-delay: 3s; }
 
         .cover-subtitle {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--text-secondary);
-            margin-bottom: 48px;
-            animation: fadeInUp 1s ease-out 0.2s backwards;
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        .scroll-indicator {
+        .scroll-container {
             position: absolute;
-            bottom: 40px;
+            bottom: 60px;
             left: 50%;
             transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            color: var(--accent-orange);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .scroll-text {
             font-size: 14px;
+            color: var(--accent-orange);
             font-weight: 500;
+            letter-spacing: 0.1em;
         }
 
-        .scroll-indicator svg {
-            width: 24px;
-            height: 24px;
-            margin-top: 8px;
-            animation: bounce 2s infinite;
+        .scroll-arrow {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--accent-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: bounceArrow 2s ease-in-out infinite;
         }
 
-        @keyframes bounce {
+        .scroll-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent-orange);
+            animation: bounceArrow 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceArrow {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Wavy Background */
-        .wavy-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .wave {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
-            animation: wave 15s ease-in-out infinite;
-        }
-
-        .wave:nth-child(1) {
-            top: -50%;
-            left: -50%;
-            animation-delay: 0s;
-        }
-
-        .wave:nth-child(2) {
-            top: -30%;
-            left: -30%;
-            animation-delay: -5s;
-            opacity: 0.5;
-        }
-
-        .wave:nth-child(3) {
-            top: -70%;
-            left: -70%;
-            animation-delay: -10s;
-            opacity: 0.3;
-        }
-
-        @keyframes wave {
-            0%, 100% {
-                transform: rotate(0deg) scale(1);
-            }
-            50% {
-                transform: rotate(180deg) scale(1.2);
-            }
+            50% { transform: translateY(8px); }
         }
 
         /* Main Content */
@@ -270,70 +284,6 @@
             color: var(--accent-orange);
         }
 
-        /* 3D Animated Pin */
-        .pin-container {
-            position: fixed;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-        }
-
-        .pin {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px var(--accent-orange-glow);
-            animation: pinFloat 3s ease-in-out infinite;
-        }
-
-        .pin:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 40px rgba(255, 107, 53, 0.4);
-        }
-
-        .pin-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-        }
-
-        .pin-label {
-            position: absolute;
-            right: 100px;
-            background: var(--bg-secondary);
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent-orange);
-            white-space: nowrap;
-            border: 1px solid var(--border-color);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .pin:hover .pin-label {
-            opacity: 1;
-        }
-
-        @keyframes pinFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
         /* Subscription Cards */
         .subscription-card {
             cursor: pointer;
@@ -422,35 +372,83 @@
             color: var(--accent-orange);
         }
 
-        /* Instructions */
+        /* 3D Animated Pin for Instructions */
+        .instructions-section {
+            margin-bottom: 60px;
+        }
+
         .instructions-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 24px;
         }
 
-        .instruction-item {
+        .instruction-card {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .instruction-card::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
+            border-radius: 50%;
             display: flex;
-            gap: 16px;
-            padding: 20px;
-        }
-
-        .instruction-num {
+            align-items: center;
+            justify-content: center;
             font-size: 14px;
-            color: var(--accent-orange);
+            color: white;
             font-weight: 700;
-            opacity: 0.7;
+            box-shadow: 0 4px 15px var(--accent-orange-glow);
+            animation: pinFloat 3s ease-in-out infinite;
         }
 
-        .instruction-text {
+        .instruction-card.clash::after { content: 'CL'; }
+        .instruction-card.v2ray::after { content: 'V2'; }
+
+        @keyframes pinFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .instruction-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .instruction-card:hover::after {
+            animation: none;
+            transform: scale(1.2);
+        }
+
+        .instruction-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 16px;
+        }
+
+        .instruction-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .instruction-card p {
             font-size: 14px;
             color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        .instruction-text strong {
-            color: var(--accent-orange);
-            font-weight: 600;
+            line-height: 1.6;
         }
 
         /* Footer */
@@ -493,8 +491,13 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .cover-title {
-                font-size: 40px;
+            .cover-title, .flip-word {
+                font-size: 36px;
+            }
+
+            .cover-subtitle {
+                font-size: 16px;
+                padding: 0 20px;
             }
 
             .stats-grid {
@@ -505,10 +508,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .pin-container {
-                display: none;
-            }
-
             .main-content {
                 padding: 40px 20px;
             }
@@ -516,38 +515,47 @@
             .btn-group {
                 flex-direction: column;
             }
+
+            .subscription-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            .scroll-container {
+                bottom: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cover-title, .flip-word {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Wavy Background -->
-    <div class="wavy-bg">
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
+    <!-- Grid and Dot Backgrounds -->
+    <div class="grid-dot-bg"></div>
 
     <!-- Cover Section -->
     <section class="cover-section">
         <div class="cover-content">
-            <h1 class="cover-title">免费节点订阅</h1>
+            <div class="cover-title-wrapper">
+                <span class="cover-title">免费</span><span class="flip-word">节点</span><span class="flip-word">订阅</span>
+            </div>
             <p class="cover-subtitle">自动化抓取 · 智能去重 · 每日更新<br>安静、持续、稳定运行，全程无需干预</p>
         </div>
-        <div class="scroll-indicator">
-            <span>下滑查看详情</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-            </svg>
+        
+        <div class="scroll-container">
+            <span class="scroll-text">下滑查看详情</span>
+            <div class="scroll-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                    <path d="M7 13l5 5 5-5"/>
+                </svg>
+            </div>
         </div>
     </section>
-
-    <!-- 3D Animated Pin -->
-    <div class="pin-container">
-        <div class="pin" onclick="scrollToTutorial()">
-            <div class="pin-icon">📚</div>
-            <div class="pin-label">查看教程</div>
-        </div>
-    </div>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -644,25 +652,19 @@
             </div>
         </div>
 
-        <!-- Instructions -->
-        <div class="card">
+        <!-- Instructions with 3D Animated Pin -->
+        <div class="instructions-section">
             <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 32px; color: var(--accent-orange);">使用说明</h3>
             <div class="instructions-grid">
-                <div class="card instruction-item">
-                    <span class="instruction-num">01</span>
-                    <span class="instruction-text"><strong>Clash</strong> — 复制订阅地址，打开 Clash 或 Mihomo，粘贴导入。默认启用节点自动选择。</span>
+                <div class="card instruction-card clash" onclick="scrollToCard('clash-card')">
+                    <div class="instruction-icon">CL</div>
+                    <h4>Clash 客户端</h4>
+                    <p>复制订阅地址，打开 Clash 或 Mihomo，粘贴导入即可使用。默认启用节点自动选择功能。</p>
                 </div>
-                <div class="card instruction-item">
-                    <span class="instruction-num">02</span>
-                    <span class="instruction-text"><strong>V2Ray</strong> — 适用于 V2RayN、V2RayNG、Shadowrocket 等支持 URI 导入的客户端。</span>
-                </div>
-                <div class="card instruction-item">
-                    <span class="instruction-num">03</span>
-                    <span class="instruction-text"><strong>自动更新</strong> — 节点每日北京时间 07:00 自动刷新，建议客户端设置同步更新。</span>
-                </div>
-                <div class="card instruction-item">
-                    <span class="instruction-num">04</span>
-                    <span class="instruction-text"><strong>智能去重</strong> — 重复节点自动去除，确保每个节点唯一可用。</span>
+                <div class="card instruction-card v2ray" onclick="scrollToCard('v2ray-card')">
+                    <div class="instruction-icon">V2</div>
+                    <h4>V2Ray 客户端</h4>
+                    <p>适用于 V2RayN、V2RayNG、Shadowrocket 等支持 URI 导入格式的客户端。</p>
                 </div>
             </div>
         </div>
@@ -699,6 +701,12 @@
         function toggleCard(cardId) {
             const card = document.getElementById(cardId);
             card.classList.toggle('active');
+        }
+
+        function scrollToCard(cardId) {
+            const card = document.getElementById(cardId);
+            card.classList.add('active');
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function copyUrl(elementId, event) {
@@ -740,10 +748,6 @@
                 button.innerHTML = originalText;
                 button.style.background = '';
             }, 2000);
-        }
-
-        function scrollToTutorial() {
-            alert('教程页面即将上线，敬请期待！');
         }
 
         document.addEventListener('DOMContentLoaded', loadStats);
