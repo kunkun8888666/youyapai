@@ -592,12 +592,22 @@ def main() -> int:
 
     clash_path = repo_root / "output" / "clash.yaml"
     v2ray_path = repo_root / "output" / "v2ray.yaml"
+    stats_path = repo_root / "output" / "stats.json"
 
     clash_path.write_text(clash_output, encoding="utf-8")
     v2ray_path.write_text(v2ray_output, encoding="utf-8")
 
+    stats_data = {
+        "clash_nodes": len(clash_proxies),
+        "v2ray_nodes": len(v2ray_urls),
+        "update_date": today.isoformat(),
+        "source_dates": fetched_dates,
+    }
+    stats_path.write_text(json.dumps(stats_data, ensure_ascii=False, indent=2), encoding="utf-8")
+
     log(f"wrote {clash_path.name} ({len(clash_proxies)} proxies)")
     log(f"wrote {v2ray_path.name} ({len(v2ray_urls)} urls)")
+    log(f"wrote {stats_path.name} with stats")
     return 0
 
 
