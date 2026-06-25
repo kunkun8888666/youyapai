@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YoYaPai 免费节点订阅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .subscription-section {
+            margin-bottom: 30px;
+        }
+        
+        .subscription-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .subscription-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .subscription-card h2 {
+            color: #495057;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .subscription-card h2::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .subscription-url {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            word-break: break-all;
+            font-size: 14px;
+            color: #495057;
+        }
+        
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+            margin-right: 10px;
+        }
+        
+        .copy-btn:hover {
+            background: #764ba2;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .download-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            background: #218838;
+        }
+        
+        .info-section {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .info-section h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .info-section ul {
+            color: #856404;
+            margin-left: 20px;
+        }
+        
+        .info-section li {
+            margin-bottom: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+            
+            .stat-item {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>YoYaPai 免费节点订阅</h1>
+            <p>每日自动更新 · 高质量节点 · 免费使用</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">228</div>
+                <div class="stat-label">Clash 节点</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">227</div>
+                <div class="stat-label">V2Ray 节点</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">每日</div>
+                <div class="stat-label">自动更新</div>
+            </div>
+        </div>
+        
+        <div class="subscription-section">
+            <div class="subscription-card">
+                <h2>Clash / Mihomo 订阅</h2>
+                <div class="subscription-url" id="clash-url">
+                    https://kunkun8888666.github.io/youyapai/output/clash.yaml
+                </div>
+                <button class="copy-btn" onclick="copyUrl('clash-url')">复制地址</button>
+                <a href="https://kunkun8888666.github.io/youyapai/output/clash.yaml" class="download-btn" download>下载文件</a>
+            </div>
+            
+            <div class="subscription-card">
+                <h2>V2Ray / Shadowrocket 订阅</h2>
+                <div class="subscription-url" id="v2ray-url">
+                    https://kunkun8888666.github.io/youyapai/output/v2ray.yaml
+                </div>
+                <button class="copy-btn" onclick="copyUrl('v2ray-url')">复制地址</button>
+                <a href="https://kunkun8888666.github.io/youyapai/output/v2ray.yaml" class="download-btn" download>下载文件</a>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3>使用说明</h3>
+            <ul>
+                <li><strong>Clash 客户端：</strong>复制 Clash 订阅地址，在 Clash/Mihomo 中导入订阅</li>
+                <li><strong>V2Ray 客户端：</strong>复制 V2Ray 订阅地址，在 V2RayN/V2RayNG/Shadowrocket 中导入</li>
+                <li><strong>自动更新：</strong>节点每日北京时间 07:00 自动更新，建议客户端设置自动更新间隔</li>
+                <li><strong>节点去重：</strong>已自动去除重复节点，确保节点质量</li>
+                <li><strong>免费使用：</strong>节点来源于 YoYaPai，仅供学习研究使用</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>数据来源：<a href="https://yoyapai.com" target="_blank">YoYaPai</a></p>
+            <p>项目地址：<a href="https://github.com/kunkun8888666/youyapai" target="_blank">GitHub</a></p>
+            <p>最后更新：2026-06-25</p>
+        </div>
+    </div>
+    
+    <script>
+        function copyUrl(elementId) {
+            const urlElement = document.getElementById(elementId);
+            const url = urlElement.textContent.trim();
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showCopySuccess(elementId);
+                }).catch(() => {
+                    fallbackCopy(url, elementId);
+                });
+            } else {
+                fallbackCopy(url, elementId);
+            }
+        }
+        
+        function fallbackCopy(text, elementId) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopySuccess(elementId);
+            } catch (err) {
+                alert('复制失败，请手动复制');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        function showCopySuccess(elementId) {
+            const urlElement = document.getElementById(elementId);
+            const originalBackground = urlElement.style.background;
+            urlElement.style.background = '#d4edda';
+            urlElement.style.borderColor = '#28a745';
+            
+            setTimeout(() => {
+                urlElement.style.background = originalBackground || 'white';
+                urlElement.style.borderColor = '#dee2e6';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
