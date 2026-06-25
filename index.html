@@ -380,12 +380,35 @@
         .instructions-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
+            gap: 32px;
+            perspective: 1000px;
         }
 
         .instruction-card {
             position: relative;
             cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .instruction-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotateX(90deg);
+            transform-origin: bottom;
+            width: 90%;
+            height: 20px;
+            background: rgba(255, 107, 53, 0.2);
+            border-radius: 50%;
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .instruction-card:hover::before {
+            opacity: 1;
         }
 
         .instruction-card::after {
@@ -393,8 +416,8 @@
             position: absolute;
             top: -10px;
             right: -10px;
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
             border-radius: 50%;
             display: flex;
@@ -403,25 +426,22 @@
             font-size: 14px;
             color: white;
             font-weight: 700;
-            box-shadow: 0 4px 15px var(--accent-orange-glow);
+            box-shadow: 0 4px 20px var(--accent-orange-glow);
             animation: pinFloat 3s ease-in-out infinite;
+            transform: translateZ(20px);
         }
 
         .instruction-card.clash::after { content: 'CL'; }
         .instruction-card.v2ray::after { content: 'V2'; }
 
         @keyframes pinFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .instruction-card:hover {
-            transform: translateY(-8px);
+            0%, 100% { transform: translateZ(20px) translateY(0); }
+            50% { transform: translateZ(20px) translateY(-8px); }
         }
 
         .instruction-card:hover::after {
             animation: none;
-            transform: scale(1.2);
+            transform: translateZ(30px) scale(1.1);
         }
 
         .instruction-icon {
@@ -436,6 +456,7 @@
             font-weight: 700;
             color: var(--accent-orange);
             margin-bottom: 16px;
+            transform: translateZ(10px);
         }
 
         .instruction-card h4 {
@@ -443,12 +464,14 @@
             font-weight: 600;
             margin-bottom: 8px;
             color: var(--text-primary);
+            transform: translateZ(15px);
         }
 
         .instruction-card p {
             font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.6;
+            transform: translateZ(8px);
         }
 
         /* Footer */
@@ -750,7 +773,33 @@
             }, 2000);
         }
 
-        document.addEventListener('DOMContentLoaded', loadStats);
+        function add3DEffect() {
+            const cards = document.querySelectorAll('.instruction-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 15;
+                    const rotateY = (centerX - x) / 15;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+            add3DEffect();
+        });
     </script>
 </body>
 </html>
