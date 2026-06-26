@@ -372,7 +372,7 @@
             color: var(--accent-orange);
         }
 
-        /* 3D Animated Pin for Instructions */
+        /* 3D Animated Pin */
         .instructions-section {
             margin-bottom: 60px;
         }
@@ -380,98 +380,180 @@
         .instructions-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-            perspective: 1000px;
+            gap: 48px;
+            perspective: 2000px;
         }
 
-        .instruction-card {
+        .pin-container {
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
             cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .instruction-card::before {
+        .pin-wrapper {
+            position: relative;
+            width: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .pin-card {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .pin-card::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%) rotateX(90deg);
-            transform-origin: bottom;
-            width: 90%;
-            height: 20px;
-            background: rgba(255, 107, 53, 0.2);
-            border-radius: 50%;
-            filter: blur(10px);
+            inset: -1px;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.3), transparent, rgba(255, 107, 53, 0.3));
+            border-radius: 16px;
             opacity: 0;
             transition: opacity 0.4s;
+            z-index: -1;
         }
 
-        .instruction-card:hover::before {
+        .pin-wrapper:hover .pin-card::before {
             opacity: 1;
         }
 
-        .instruction-card::after {
-            content: '';
+        .pin {
             position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: white;
-            font-weight: 700;
-            box-shadow: 0 4px 20px var(--accent-orange-glow);
-            animation: pinFloat 3s ease-in-out infinite;
-            transform: translateZ(20px);
-        }
-
-        .instruction-card.clash::after { content: 'CL'; }
-        .instruction-card.v2ray::after { content: 'V2'; }
-
-        @keyframes pinFloat {
-            0%, 100% { transform: translateZ(20px) translateY(0); }
-            50% { transform: translateZ(20px) translateY(-8px); }
-        }
-
-        .instruction-card:hover::after {
-            animation: none;
-            transform: translateZ(30px) scale(1.1);
-        }
-
-        .instruction-icon {
+            top: -20px;
+            right: 20px;
             width: 48px;
             height: 48px;
-            background: rgba(255, 107, 53, 0.1);
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 50%, #ffc107 100%);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            box-shadow: 0 4px 25px rgba(255, 107, 53, 0.4);
+            z-index: 10;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .pin::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+        }
+
+        .pin-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            z-index: 1;
+        }
+
+        .pin-wrapper:hover .pin {
+            transform: rotate(-45deg) scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 40px rgba(255, 107, 53, 0.6);
+        }
+
+        .pin-shadow {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0;
+            transition: opacity 0.4s;
+            transform-style: preserve-3d;
+        }
+
+        .pin-wrapper:hover .pin-shadow {
+            opacity: 1;
+        }
+
+        .pin-title {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-orange);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .pin-wrapper:hover .pin-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pin-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15), rgba(255, 107, 53, 0.05));
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
             font-weight: 700;
             color: var(--accent-orange);
-            margin-bottom: 16px;
-            transform: translateZ(10px);
+            margin-bottom: 20px;
+            transition: all 0.4s;
+            transform: translateZ(30px);
         }
 
-        .instruction-card h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
+        .pin-wrapper:hover .pin-icon {
+            transform: translateZ(40px) scale(1.05);
+        }
+
+        .pin-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
             color: var(--text-primary);
-            transform: translateZ(15px);
+            transform: translateZ(20px);
+            transition: transform 0.4s;
         }
 
-        .instruction-card p {
+        .pin-wrapper:hover h4 {
+            transform: translateZ(30px);
+        }
+
+        .pin-card p {
             font-size: 14px;
             color: var(--text-secondary);
-            line-height: 1.6;
-            transform: translateZ(8px);
+            line-height: 1.7;
+            transform: translateZ(10px);
+            transition: transform 0.4s;
+        }
+
+        .pin-wrapper:hover p {
+            transform: translateZ(20px);
         }
 
         /* Footer */
@@ -677,17 +759,35 @@
 
         <!-- Instructions with 3D Animated Pin -->
         <div class="instructions-section">
-            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 32px; color: var(--accent-orange);">使用说明</h3>
+            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 40px; color: var(--accent-orange);">使用说明</h3>
             <div class="instructions-grid">
-                <div class="card instruction-card clash" onclick="scrollToCard('clash-card')">
-                    <div class="instruction-icon">CL</div>
-                    <h4>Clash 客户端</h4>
-                    <p>复制订阅地址，打开 Clash 或 Mihomo，粘贴导入即可使用。默认启用节点自动选择功能。</p>
+                <div class="pin-container" onclick="scrollToCard('clash-card')">
+                    <div class="pin-wrapper">
+                        <div class="pin-title">点击跳转</div>
+                        <div class="pin">
+                            <span class="pin-text">CL</span>
+                        </div>
+                        <div class="pin-card">
+                            <div class="pin-icon">CL</div>
+                            <h4>Clash 客户端</h4>
+                            <p>复制订阅地址，打开 Clash 或 Mihomo，粘贴导入即可使用。默认启用节点自动选择功能。</p>
+                        </div>
+                        <div class="pin-shadow"></div>
+                    </div>
                 </div>
-                <div class="card instruction-card v2ray" onclick="scrollToCard('v2ray-card')">
-                    <div class="instruction-icon">V2</div>
-                    <h4>V2Ray 客户端</h4>
-                    <p>适用于 V2RayN、V2RayNG、Shadowrocket 等支持 URI 导入格式的客户端。</p>
+                <div class="pin-container" onclick="scrollToCard('v2ray-card')">
+                    <div class="pin-wrapper">
+                        <div class="pin-title">点击跳转</div>
+                        <div class="pin">
+                            <span class="pin-text">V2</span>
+                        </div>
+                        <div class="pin-card">
+                            <div class="pin-icon">V2</div>
+                            <h4>V2Ray 客户端</h4>
+                            <p>适用于 V2RayN、V2RayNG、Shadowrocket 等支持 URI 导入格式的客户端。</p>
+                        </div>
+                        <div class="pin-shadow"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -774,24 +874,25 @@
         }
 
         function add3DEffect() {
-            const cards = document.querySelectorAll('.instruction-card');
+            const wrappers = document.querySelectorAll('.pin-wrapper');
             
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
+            wrappers.forEach(wrapper => {
+                wrapper.addEventListener('mousemove', (e) => {
+                    const rect = wrapper.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
                     
-                    const rotateX = (y - centerY) / 15;
-                    const rotateY = (centerX - x) / 15;
+                    const rotateX = (y - centerY) / 12;
+                    const rotateY = (centerX - x) / 12;
+                    const translateY = -15;
                     
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+                    wrapper.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${translateY}px)`;
                 });
                 
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                wrapper.addEventListener('mouseleave', () => {
+                    wrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
                 });
             });
         }
