@@ -402,67 +402,50 @@
 
         .pin-card {
             position: relative;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+            background: rgba(17, 17, 19, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 53, 0.1);
             border-radius: 16px;
-            padding: 24px;
+            padding: 32px;
             transform-style: preserve-3d;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            overflow: hidden;
-        }
-
-        .pin-card::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.3), transparent, rgba(255, 107, 53, 0.3));
-            border-radius: 16px;
-            opacity: 0;
-            transition: opacity 0.4s;
-            z-index: -1;
-        }
-
-        .pin-wrapper:hover .pin-card::before {
-            opacity: 1;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
         }
 
         .pin {
             position: absolute;
-            top: -24px;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 50%, #ffc107 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 25px rgba(255, 107, 53, 0.4);
-            z-index: 10;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.5);
+            z-index: 20;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .pin::before {
             content: '';
             position: absolute;
-            width: 16px;
-            height: 16px;
-            background: rgba(255, 255, 255, 0.3);
+            width: 14px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.35);
             border-radius: 50%;
-            top: 8px;
-            left: 8px;
+            top: 6px;
+            left: 6px;
+            filter: blur(2px);
         }
 
         .pin-text {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             color: white;
-        }
-
-        .pin-wrapper:hover .pin {
-            transform: translateX(-50%) scale(1.1);
-            box-shadow: 0 8px 40px rgba(255, 107, 53, 0.6);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .pin-line {
@@ -472,33 +455,23 @@
             transform: translateX(-50%);
             width: 2px;
             height: 0;
-            background: linear-gradient(to bottom, var(--accent-orange), transparent);
+            background: linear-gradient(to bottom, rgba(255, 107, 53, 0.8), rgba(255, 107, 53, 0.2));
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 5;
-        }
-
-        .pin-wrapper:hover .pin-line {
-            height: 40px;
-            opacity: 0.6;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 15;
         }
 
         .pin-ripple {
             position: absolute;
-            top: 30%;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 100px;
-            border: 2px solid rgba(255, 107, 53, 0.3);
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 120px;
+            height: 120px;
+            border: 2px solid rgba(255, 107, 53, 0.2);
             border-radius: 50%;
             opacity: 0;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .pin-wrapper:hover .pin-ripple {
-            opacity: 1;
-            transform: translateX(-50%) scale(1.5);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .pin-ripple::before {
@@ -506,62 +479,82 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            border: 2px solid rgba(255, 107, 53, 0.2);
+            transform: translate(-50%, -50%) scale(0.6);
+            width: 80px;
+            height: 80px;
+            border: 2px solid rgba(255, 107, 53, 0.15);
             border-radius: 50%;
             opacity: 0;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            transition-delay: 0.1s;
-        }
-
-        .pin-wrapper:hover .pin-ripple::before {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1.5);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition-delay: 0.15s;
         }
 
         .pin-shadow {
             position: absolute;
-            bottom: -15px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80%;
-            height: 20px;
-            background: rgba(0, 0, 0, 0.3);
+            width: 90%;
+            height: 30px;
+            background: rgba(255, 107, 53, 0.15);
             border-radius: 50%;
-            filter: blur(15px);
+            filter: blur(20px);
             opacity: 0;
-            transition: opacity 0.4s;
-            transform-style: preserve-3d;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pin-title {
+            position: absolute;
+            top: -55px;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: rgba(17, 17, 19, 0.95);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 25;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .pin-wrapper:hover .pin {
+            transform: translateX(-50%) scale(1.15);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.7);
+        }
+
+        .pin-wrapper:hover .pin-line {
+            height: 35px;
+            opacity: 0.7;
+        }
+
+        .pin-wrapper:hover .pin-ripple {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.4);
+        }
+
+        .pin-wrapper:hover .pin-ripple::before {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.6);
         }
 
         .pin-wrapper:hover .pin-shadow {
             opacity: 1;
         }
 
-        .pin-title {
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--accent-orange);
-            white-space: nowrap;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            pointer-events: none;
-            z-index: 20;
-        }
-
         .pin-wrapper:hover .pin-title {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
+        }
+
+        .pin-wrapper:hover .pin-card {
+            transform: translateY(-8px);
+            border-color: rgba(255, 107, 53, 0.3);
         }
 
         .pin-card-content {

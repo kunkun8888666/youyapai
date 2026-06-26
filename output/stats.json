@@ -1,9 +1,9 @@
 {
-  "clash_nodes": 228,
-  "v2ray_nodes": 227,
+  "clash_nodes": 325,
+  "v2ray_nodes": 251,
   "update_date": "2026-06-26",
-  "source_dates": [
-    "2026-06-25",
-    "2026-06-24"
+  "sources": [
+    "yoyapai.com",
+    "clash-rs.com"
   ]
 }
