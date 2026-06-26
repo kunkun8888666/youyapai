@@ -12,7 +12,7 @@
         var lastTs = 0;
         var time = 0;
 
-        var LINE_COUNT = 10;
+        var LINE_COUNT = 6;
         var LINE_COLORS = [
             [255, 107, 53],
             [255, 140, 90],
@@ -28,7 +28,7 @@
 
         function getDensity() {
             var area = W * H;
-            return Math.min(Math.max(Math.floor(area / 7000), 70), 250);
+            return Math.min(Math.max(Math.floor(area / 12000), 50), 180);
         }
 
         function resize() {
