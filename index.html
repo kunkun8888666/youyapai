@@ -258,12 +258,6 @@
             color: var(--text-secondary); line-height: 1.6;
         }
 
-        .pin-card-gradient {
-            flex: 1; width: 100%; border-radius: 0.5rem; margin-top: 1rem;
-            background: linear-gradient(135deg, #ff6b35, #ff8c5a, #ffc107);
-            min-height: 6rem;
-        }
-
         /* Pin Perspective - Aceternity UI */
         .pin-perspective {
             pointer-events: none; width: 24rem; height: 20rem;
@@ -509,7 +503,7 @@
         <div class="instructions-section">
             <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 40px; color: var(--accent-orange);">使用说明</h3>
             <div class="instructions-grid">
-                <div class="pin-container" onclick="scrollToCard('clash-card')">
+                <div class="pin-container" onclick="location.href='clash.html'">
                     <div class="pin-3d-card">
                         <div class="pin-3d-inner">
                             <div class="pin-card-content">
@@ -517,14 +511,13 @@
                                 <div class="pin-card-desc">
                                     <span>复制订阅地址，打开 Clash 或 Mihomo，粘贴导入即可使用。</span>
                                 </div>
-                                <div class="pin-card-gradient"></div>
                             </div>
                         </div>
                     </div>
                     <div class="pin-perspective">
                         <div class="pin-perspective-inner">
                             <div class="pin-perspective-title">
-                                <a href="javascript:void(0)">
+                                <a href="clash.html">
                                     <span>Clash / Mihomo</span>
                                     <span class="title-line"></span>
                                 </a>
@@ -541,7 +534,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="pin-container" onclick="scrollToCard('v2ray-card')">
+                <div class="pin-container" onclick="location.href='v2ray.html'">
                     <div class="pin-3d-card">
                         <div class="pin-3d-inner">
                             <div class="pin-card-content">
@@ -549,14 +542,13 @@
                                 <div class="pin-card-desc">
                                     <span>适用于 V2RayN、V2RayNG、Shadowrocket 等客户端。</span>
                                 </div>
-                                <div class="pin-card-gradient"></div>
                             </div>
                         </div>
                     </div>
                     <div class="pin-perspective">
                         <div class="pin-perspective-inner">
                             <div class="pin-perspective-title">
-                                <a href="javascript:void(0)">
+                                <a href="v2ray.html">
                                     <span>V2Ray / 影梭</span>
                                     <span class="title-line"></span>
                                 </a>

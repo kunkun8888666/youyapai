@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clash 客户端教程 - 免费节点订阅</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #18181b;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-orange: #ff6b35;
+            --accent-orange-light: #ff8c5a;
+            --accent-orange-glow: rgba(255, 107, 53, 0.15);
+            --border-color: #27272a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-orange);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover { opacity: 0.8; }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 50%, #ffc107 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .page-desc {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 48px;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: step;
+        }
+
+        .step-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 48px;
+            margin-bottom: 24px;
+        }
+
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .terminal {
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+
+        .terminal-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-left: 12px;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            word-break: break-all;
+        }
+
+        .client-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .client-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .client-card:hover {
+            border-color: rgba(255, 107, 53, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .client-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .client-platform {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .note {
+            background: rgba(255, 107, 53, 0.08);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .note-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin-bottom: 8px;
+        }
+
+        .note-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+            color: white;
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4); }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+
+        .btn-group { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+
+        @media (max-width: 768px) {
+            .page-title { font-size: 28px; }
+            .container { padding: 40px 16px; }
+            .client-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            返回首页
+        </a>
+
+        <h1 class="page-title">Clash 客户端教程</h1>
+        <p class="page-desc">适用于 Clash for Windows、Clash Verge、Mihomo 等基于 Clash 内核的客户端</p>
+
+        <div class="section">
+            <h2 class="section-title">推荐客户端</h2>
+            <div class="client-grid">
+                <div class="client-card">
+                    <div class="client-name">Clash Verge Rev</div>
+                    <div class="client-platform">Windows / macOS / Linux</div>
+                </div>
+                <div class="client-card">
+                    <div class="client-name">Mihomo Party</div>
+                    <div class="client-platform">Windows / macOS / Linux</div>
+                </div>
+                <div class="client-card">
+                    <div class="client-name">ClashX Meta</div>
+                    <div class="client-platform">macOS</div>
+                </div>
+                <div class="client-card">
+                    <div class="client-name">Clash Meta for Android</div>
+                    <div class="client-platform">Android</div>
+                </div>
+                <div class="client-card">
+                    <div class="client-name">Stash</div>
+                    <div class="client-platform">iOS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">使用步骤</h2>
+            <ol class="step-list">
+                <li>
+                    <div class="step-title">复制订阅地址</div>
+                    <div class="step-desc">返回首页，点击 Clash 订阅卡片的「复制链接」按钮，将订阅地址复制到剪贴板。</div>
+                </li>
+                <li>
+                    <div class="step-title">打开客户端，导入订阅</div>
+                    <div class="step-desc">打开 Clash 客户端，找到「配置」或「Profiles」页面，在订阅地址输入框中粘贴刚才复制的链接，点击「导入」或「Download」。</div>
+                </li>
+                <li>
+                    <div class="step-title">选择配置文件</div>
+                    <div class="step-desc">导入成功后，在配置列表中点击选中刚导入的配置文件，使其变为激活状态。</div>
+                </li>
+                <li>
+                    <div class="step-title">开启系统代理</div>
+                    <div class="step-desc">在客户端主界面，打开「系统代理」或「System Proxy」开关。选择代理模式为「规则」或「Rule」模式。</div>
+                </li>
+                <li>
+                    <div class="step-title">选择节点</div>
+                    <div class="step-desc">在「代理」或「Proxies」页面，可以选择「AUTO」自动选择延迟最低的节点，也可以手动选择特定节点。</div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">订阅地址</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">Clash 订阅</div>
+                </div>
+                <div class="terminal-body" id="clash-url">https://kunkun8888666.github.io/youyapai/output/clash.yaml</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="copyUrl('clash-url')">复制链接</button>
+                <a href="https://kunkun8888666.github.io/youyapai/output/clash.yaml" class="btn btn-secondary" download>下载文件</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">常见问题</h2>
+            <div class="note">
+                <div class="note-title">导入失败怎么办？</div>
+                <div class="note-text">检查订阅地址是否完整复制，确认网络可以正常访问 GitHub Pages。如果仍然失败，尝试下载文件后本地导入。</div>
+            </div>
+            <div class="note" style="margin-top: 12px;">
+                <div class="note-title">节点无法连接？</div>
+                <div class="note-text">免费节点可能随时失效，请等待每日自动更新。也可以在代理页面切换到其他节点尝试。</div>
+            </div>
+            <div class="note" style="margin-top: 12px;">
+                <div class="note-title">配置文件说明</div>
+                <div class="note-text">本订阅提供完整的 Clash/Mihomo 配置文件，包含代理节点、代理组（PROXY 选择组、AUTO 自动测速组）和路由规则，可直接导入使用。</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyUrl(elementId) {
+            const url = document.getElementById(elementId).textContent.trim();
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    const btn = event.target.closest('.btn');
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 已复制';
+                    btn.style.background = '#22c55e';
+                    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 2000);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
