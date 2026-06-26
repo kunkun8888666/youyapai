@@ -367,11 +367,8 @@
         .footer {
             margin-top: 80px; padding-top: 40px;
             border-top: 1px solid var(--border-color);
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex; justify-content: center; align-items: center;
         }
-
-        .footer-left { font-size: 14px; color: var(--text-muted); }
-        .footer-left a { color: var(--accent-orange); text-decoration: none; font-weight: 500; }
 
         .update-info {
             display: flex; align-items: center; gap: 10px; font-size: 13px;
@@ -383,19 +380,31 @@
 
         @media (max-width: 768px) {
             .cover-title, .flip-word { font-size: 36px; }
-            .cover-subtitle { font-size: 16px; padding: 0 20px; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .instructions-grid { grid-template-columns: 1fr; }
-            .main-content { padding: 40px 20px; }
+            .cover-subtitle { font-size: 15px; padding: 0 20px; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+            .stat-card { padding: 24px 12px; }
+            .stat-value { font-size: 32px; }
+            .stat-label { font-size: 13px; }
+            .instructions-grid { grid-template-columns: 1fr; gap: 32px; }
+            .main-content { padding: 40px 16px; }
             .btn-group { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
             .subscription-header { flex-direction: column; gap: 16px; align-items: flex-start; }
             .scroll-container { bottom: 40px; }
             .pin-card-content { width: 16rem; }
+            .pin-perspective { width: 20rem; height: 16rem; }
+            .card { padding: 24px; }
+            .terminal-body { font-size: 12px; padding: 16px; }
         }
 
         @media (max-width: 480px) {
             .cover-title, .flip-word { font-size: 28px; }
+            .cover-subtitle { font-size: 14px; }
+            .stats-grid { grid-template-columns: 1fr; gap: 12px; }
             .pin-card-content { width: 14rem; }
+            .pin-perspective { width: 16rem; height: 14rem; }
+            .pin-card-title { font-size: 0.875rem; }
+            .pin-card-desc { font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -569,9 +578,6 @@
         </div>
 
         <footer class="footer">
-            <div class="footer-left">
-                项目地址 <a href="https://github.com/kunkun8888666/youyapai" target="_blank">GitHub</a>
-            </div>
             <div class="update-info">
                 <span>最后更新：</span>
                 <span class="value" id="update-date">--</span>
