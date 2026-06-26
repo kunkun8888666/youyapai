@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="V2Ray客户端使用教程，详细介绍如何导入免费节点订阅、添加订阅、更新节点、选择连接，支持V2RayN、V2RayNG、Shadowrocket、Quantumult X等客户端。">
+    <meta name="theme-color" content="#0a0a0b">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://kunkun8888666.github.io; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://kunkun8888666.github.io;">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23ff6b35'/><stop offset='100%25' stop-color='%23ffc107'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0b'/><circle cx='50' cy='50' r='30' fill='none' stroke='url(%23g)' stroke-width='4'/><circle cx='50' cy='50' r='8' fill='%23ff6b35'/><line x1='50' y1='20' x2='50' y2='35' stroke='%23ff8c5a' stroke-width='3' stroke-linecap='round'/><line x1='50' y1='65' x2='50' y2='80' stroke='%23ff8c5a' stroke-width='3' stroke-linecap='round'/><line x1='20' y1='50' x2='35' y2='50' stroke='%23ff8c5a' stroke-width='3' stroke-linecap='round'/><line x1='65' y1='50' x2='80' y2='50' stroke='%23ff8c5a' stroke-width='3' stroke-linecap='round'/></svg>">
     <title>V2Ray 客户端教程 - 免费节点订阅</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0a0a0b;
@@ -14,7 +18,7 @@
             --bg-tertiary: #18181b;
             --text-primary: #fafafa;
             --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
+            --text-muted: #9497a0;
             --accent-orange: #ff6b35;
             --accent-orange-light: #ff8c5a;
             --accent-orange-glow: rgba(255, 107, 53, 0.15);
@@ -30,10 +34,20 @@
             line-height: 1.8;
         }
 
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 60px 24px;
+            position: relative;
+            z-index: 2;
         }
 
         .back-link {
@@ -251,6 +265,7 @@
     </style>
 </head>
 <body>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
     <div class="container">
         <a href="index.html" class="back-link">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -353,6 +368,8 @@
             </div>
         </div>
     </div>
+
+    <script src="bg.js" defer></script>
 
     <script>
         function copyUrl(elementId) {
