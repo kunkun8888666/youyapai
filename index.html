@@ -23,11 +23,7 @@
             --dot-color: rgba(255, 107, 53, 0.05);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -36,70 +32,41 @@
             overflow-x: hidden;
         }
 
-        /* Grid and Dot Backgrounds */
         .grid-dot-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            background-image: 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+            background-image:
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 60px 60px;
         }
 
         .grid-dot-bg::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
             background-size: 40px 40px;
         }
 
-        /* Cover Section */
         .cover-section {
-            height: 100vh;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            height: 100vh; position: relative;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             overflow: hidden;
         }
 
-        .cover-content {
-            text-align: center;
-            z-index: 10;
-            padding: 40px;
-        }
+        .cover-content { text-align: center; z-index: 10; padding: 40px; }
 
-        .cover-title-wrapper {
-            margin-bottom: 24px;
-        }
+        .cover-title-wrapper { margin-bottom: 24px; }
 
         .cover-title {
-            font-size: 64px;
-            font-weight: 700;
+            font-size: 64px; font-weight: 700;
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 50%, #ffc107 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
 
         .flip-word {
-            display: inline-block;
-            font-size: 64px;
-            font-weight: 700;
+            display: inline-block; font-size: 64px; font-weight: 700;
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 50%, #ffc107 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             animation: flipWords 4s ease-in-out infinite;
         }
 
@@ -115,92 +82,49 @@
         .flip-word:nth-child(4) { animation-delay: 3s; }
 
         .cover-subtitle {
-            font-size: 18px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            max-width: 500px;
-            margin: 0 auto;
+            font-size: 18px; color: var(--text-secondary); line-height: 1.8;
+            max-width: 500px; margin: 0 auto;
         }
 
         .scroll-container {
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
+            position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+            z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 16px;
         }
 
-        .scroll-text {
-            font-size: 14px;
-            color: var(--accent-orange);
-            font-weight: 500;
-            letter-spacing: 0.1em;
-        }
+        .scroll-text { font-size: 14px; color: var(--accent-orange); font-weight: 500; letter-spacing: 0.1em; }
 
         .scroll-arrow {
-            width: 32px;
-            height: 32px;
-            border: 2px solid var(--accent-orange);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 32px; height: 32px; border: 2px solid var(--accent-orange); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             animation: bounceArrow 2s ease-in-out infinite;
         }
 
-        .scroll-arrow svg {
-            width: 16px;
-            height: 16px;
-            stroke: var(--accent-orange);
-            animation: bounceArrow 2s ease-in-out infinite;
-        }
+        .scroll-arrow svg { width: 16px; height: 16px; stroke: var(--accent-orange); }
 
         @keyframes bounceArrow {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(8px); }
         }
 
-        /* Main Content */
         .main-content {
-            min-height: 100vh;
-            position: relative;
-            z-index: 5;
-            padding: 80px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
+            min-height: 100vh; position: relative; z-index: 5;
+            padding: 80px 40px; max-width: 1200px; margin: 0 auto;
         }
 
-        /* Cards */
         .card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 24px;
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 32px; margin-bottom: 24px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
 
         .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
             background: linear-gradient(90deg, transparent, var(--accent-orange), transparent);
-            opacity: 0;
-            transition: opacity 0.4s;
+            opacity: 0; transition: opacity 0.4s;
         }
 
-        .card:hover::before {
-            opacity: 1;
-        }
+        .card:hover::before { opacity: 1; }
 
         .card:hover {
             border-color: rgba(255, 107, 53, 0.5);
@@ -208,480 +132,282 @@
             transform: translateY(-4px);
         }
 
-        /* Stats Grid */
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 60px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px;
         }
 
-        .stat-card {
-            text-align: center;
-            padding: 40px;
-        }
+        .stat-card { text-align: center; padding: 40px; }
 
         .stat-value {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--accent-orange);
-            margin-bottom: 8px;
-            text-shadow: 0 0 30px var(--accent-orange-glow);
+            font-size: 48px; font-weight: 700; color: var(--accent-orange);
+            margin-bottom: 8px; text-shadow: 0 0 30px var(--accent-orange-glow);
         }
 
-        .stat-label {
-            font-size: 16px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
+        .stat-label { font-size: 16px; color: var(--text-muted); font-weight: 500; }
 
-        /* Terminal Style */
         .terminal {
-            background: #0d0d0d;
-            border: 1px solid #2a2a2a;
-            border-radius: 12px;
-            padding: 0;
-            overflow: hidden;
-            margin-bottom: 24px;
+            background: #0d0d0d; border: 1px solid #2a2a2a; border-radius: 12px;
+            padding: 0; overflow: hidden; margin-bottom: 24px;
         }
 
         .terminal-header {
-            background: #1a1a1a;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid #2a2a2a;
+            background: #1a1a1a; padding: 12px 16px;
+            display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #2a2a2a;
         }
 
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
         .terminal-dot.red { background: #ff5f56; }
         .terminal-dot.yellow { background: #ffbd2e; }
         .terminal-dot.green { background: #27c93f; }
 
         .terminal-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-left: 12px;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            color: var(--text-muted); margin-left: 12px;
         }
 
         .terminal-body {
-            padding: 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            word-break: break-all;
+            padding: 20px; font-family: 'JetBrains Mono', monospace;
+            font-size: 14px; color: var(--text-secondary); line-height: 1.6; word-break: break-all;
         }
 
-        .terminal-body .prompt {
-            color: var(--accent-orange);
-        }
+        .terminal-body .prompt { color: var(--accent-orange); }
 
-        /* Subscription Cards */
-        .subscription-card {
-            cursor: pointer;
-        }
+        .subscription-card { cursor: pointer; }
 
-        .subscription-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+        .subscription-header { display: flex; align-items: center; gap: 20px; }
 
         .subscription-icon {
-            width: 56px;
-            height: 56px;
+            width: 56px; height: 56px;
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 700; color: white;
         }
 
-        .subscription-info h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
+        .subscription-info h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+        .subscription-info span { font-size: 14px; color: var(--text-muted); }
 
-        .subscription-info span {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
+        .subscription-content { display: none; margin-top: 24px; }
+        .subscription-card.active .subscription-content { display: block; }
 
-        .subscription-content {
-            display: none;
-            margin-top: 24px;
-        }
-
-        .subscription-card.active .subscription-content {
-            display: block;
-        }
-
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            gap: 16px;
-            margin-top: 24px;
-        }
+        .btn-group { display: flex; gap: 16px; margin-top: 24px; }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 28px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: inherit;
-            border-radius: 12px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 28px; font-size: 14px; font-weight: 600; border: none; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit; border-radius: 12px;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
-            color: white;
-            box-shadow: 0 4px 20px var(--accent-orange-glow);
+            color: white; box-shadow: 0 4px 20px var(--accent-orange-glow);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 40px rgba(255, 107, 53, 0.4);
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(255, 107, 53, 0.4); }
 
         .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary); color: var(--text-primary);
+            border: 1px solid var(--border-color); text-decoration: none;
         }
 
-        .btn-secondary:hover {
-            border-color: var(--accent-orange);
-            color: var(--accent-orange);
-        }
+        .btn-secondary:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
 
-        /* 3D Animated Pin */
-        .instructions-section {
-            margin-bottom: 60px;
-        }
-
-        .instructions-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 48px;
-            perspective: 2000px;
-        }
-
+        /* 3D Animated Pin - Aceternity UI */
         .pin-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative; display: flex; justify-content: center; align-items: center;
+            z-index: 50; cursor: pointer;
+        }
+
+        .pin-container .pin-3d-card {
+            position: absolute; left: 50%; top: 50%;
+            margin-left: 0.09375rem; margin-top: 1rem;
+            transform: translateX(-50%) translateY(-50%);
             perspective: 1000px;
-            cursor: pointer;
+            transform: rotateX(70deg) translateZ(0deg);
         }
 
-        .pin-wrapper {
-            position: relative;
-            width: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        .pin-container .pin-3d-inner {
+            position: absolute; left: 50%; top: 50%;
+            padding: 1rem;
+            transform: translate(-50%, -50%) rotateX(0deg);
+            display: flex; justify-content: flex-start; align-items: flex-start;
+            border-radius: 1rem;
+            box-shadow: 0 8px 16px rgb(0 0 0 / 0.4);
+            background: black;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
 
-        .pin-card {
-            position: relative;
-            background: rgba(17, 17, 19, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 107, 53, 0.1);
-            border-radius: 16px;
-            padding: 32px;
-            transform-style: preserve-3d;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-
-        .pin {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 50%, #ffc107 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.5);
-            z-index: 20;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .pin::before {
-            content: '';
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            background: rgba(255, 255, 255, 0.35);
-            border-radius: 50%;
-            top: 6px;
-            left: 6px;
-            filter: blur(2px);
-        }
-
-        .pin-text {
-            font-size: 13px;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        .pin-line {
-            position: absolute;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 0;
-            background: linear-gradient(to bottom, rgba(255, 107, 53, 0.8), rgba(255, 107, 53, 0.2));
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 15;
-        }
-
-        .pin-ripple {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            width: 120px;
-            height: 120px;
-            border: 2px solid rgba(255, 107, 53, 0.2);
-            border-radius: 50%;
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .pin-ripple::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.6);
-            width: 80px;
-            height: 80px;
-            border: 2px solid rgba(255, 107, 53, 0.15);
-            border-radius: 50%;
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transition-delay: 0.15s;
-        }
-
-        .pin-shadow {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            height: 30px;
-            background: rgba(255, 107, 53, 0.15);
-            border-radius: 50%;
-            filter: blur(20px);
-            opacity: 0;
-            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .pin-title {
-            position: absolute;
-            top: -55px;
-            left: 50%;
-            transform: translateX(-50%) translateY(8px);
-            background: rgba(17, 17, 19, 0.95);
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-            white-space: nowrap;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 25;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .pin-wrapper:hover .pin {
-            transform: translateX(-50%) scale(1.15);
-            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.7);
-        }
-
-        .pin-wrapper:hover .pin-line {
-            height: 35px;
-            opacity: 0.7;
-        }
-
-        .pin-wrapper:hover .pin-ripple {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1.4);
-        }
-
-        .pin-wrapper:hover .pin-ripple::before {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1.6);
-        }
-
-        .pin-wrapper:hover .pin-shadow {
-            opacity: 1;
-        }
-
-        .pin-wrapper:hover .pin-title {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .pin-wrapper:hover .pin-card {
-            transform: translateY(-8px);
-            border-color: rgba(255, 107, 53, 0.3);
+        .pin-container:hover .pin-3d-inner {
+            transform: translate(-50%, -50%) rotateX(40deg) scale(0.8);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .pin-card-content {
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            width: 100%;
-            transform-style: preserve-3d;
+            position: relative; z-index: 50;
+            display: flex; flex-direction: column; padding: 0; width: 20rem;
         }
 
         .pin-card-title {
-            max-width: 100%;
-            margin: 0 0 12px 0;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            transform: translateZ(20px);
-            transition: transform 0.4s;
-        }
-
-        .pin-wrapper:hover .pin-card-title {
-            transform: translateZ(30px);
+            max-width: 100%; margin: 0 0 0.5rem 0;
+            font-size: 1rem; font-weight: 700; color: var(--text-primary);
         }
 
         .pin-card-desc {
-            font-size: 14px;
-            margin: 0;
-            padding: 0;
-            font-weight: 400;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            transform: translateZ(10px);
-            transition: transform 0.4s;
+            font-size: 0.875rem; margin: 0; padding: 0; font-weight: 400;
+            color: var(--text-secondary); line-height: 1.6;
         }
 
-        .pin-wrapper:hover .pin-card-desc {
-            transform: translateZ(20px);
+        .pin-card-gradient {
+            flex: 1; width: 100%; border-radius: 0.5rem; margin-top: 1rem;
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a, #ffc107);
+            min-height: 6rem;
         }
 
-        /* Footer */
-        .footer {
-            margin-top: 80px;
-            padding-top: 40px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Pin Perspective - Aceternity UI */
+        .pin-perspective {
+            pointer-events: none; width: 24rem; height: 20rem;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.5s;
         }
 
-        .footer-left {
-            font-size: 14px;
-            color: var(--text-muted);
+        .pin-container:hover .pin-perspective { opacity: 1; }
+
+        .pin-perspective-inner { width: 100%; height: 100%; margin-top: -1.75rem; position: relative; inset: 0; }
+
+        .pin-perspective-title {
+            position: absolute; top: 0; left: 0; right: 0;
+            display: flex; justify-content: center;
         }
 
-        .footer-left a {
-            color: var(--accent-orange);
+        .pin-perspective-title a {
+            position: relative; display: flex; align-items: center; gap: 0.5rem;
+            z-index: 10; border-radius: 9999px;
+            background: #09090b; padding: 0.125rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-decoration: none;
-            font-weight: 500;
         }
+
+        .pin-perspective-title span {
+            position: relative; z-index: 20; color: white;
+            font-size: 0.75rem; font-weight: 700;
+            display: inline-block; padding: 0.125rem 0;
+        }
+
+        .pin-perspective-title .title-line {
+            position: absolute; bottom: 0; left: 1.125rem;
+            height: 1px; width: calc(100% - 2.25rem);
+            background: linear-gradient(to right, rgba(255, 107, 53, 0), rgba(255, 107, 53, 0.9), rgba(255, 107, 53, 0));
+            transition: opacity 0.5s;
+        }
+
+        .pin-perspective-ripples {
+            position: absolute; left: 50%; top: 50%;
+            margin-left: 0.09375rem; margin-top: 1rem;
+            transform: translateX(-50%) translateY(-50%);
+            perspective: 1000px;
+            transform: rotateX(70deg) translateZ(0);
+        }
+
+        .pin-ripple-ring {
+            position: absolute; left: 50%; top: 50%;
+            height: 11.25rem; width: 11.25rem; border-radius: 50%;
+            background: rgba(255, 107, 53, 0.08);
+            box-shadow: 0 8px 16px rgb(0 0 0 / 0.4);
+            animation: rippleExpand 6s ease-in-out infinite;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+
+        .pin-ripple-ring:nth-child(1) { animation-delay: 0s; }
+        .pin-ripple-ring:nth-child(2) { animation-delay: 2s; }
+        .pin-ripple-ring:nth-child(3) { animation-delay: 4s; }
+
+        @keyframes rippleExpand {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+            16.67% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            33.33% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .pin-perspective-line {
+            position: absolute; right: 50%; bottom: 50%;
+            width: 1px; height: 5rem;
+            background: linear-gradient(to bottom, transparent, #ff6b35);
+            transform: translateY(14px); filter: blur(2px);
+            transition: height 0.5s;
+        }
+
+        .pin-container:hover .pin-perspective-line { height: 10rem; }
+
+        .pin-perspective-line-solid {
+            position: absolute; right: 50%; bottom: 50%;
+            width: 1px; height: 5rem;
+            background: linear-gradient(to bottom, transparent, #ff6b35);
+            transform: translateY(14px);
+            transition: height 0.5s;
+        }
+
+        .pin-container:hover .pin-perspective-line-solid { height: 10rem; }
+
+        .pin-perspective-dot-blur {
+            position: absolute; right: 50%; bottom: 50%;
+            transform: translateX(1.5px) translateY(14px);
+            width: 4px; height: 4px; border-radius: 50%;
+            background: #ff8c5a; z-index: 40; filter: blur(3px);
+        }
+
+        .pin-perspective-dot {
+            position: absolute; right: 50%; bottom: 50%;
+            transform: translateX(0.5px) translateY(14px);
+            width: 2px; height: 2px; border-radius: 50%;
+            background: #ffc107; z-index: 40;
+        }
+
+        .instructions-section { margin-bottom: 60px; }
+
+        .instructions-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 48px;
+        }
+
+        .footer {
+            margin-top: 80px; padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .footer-left { font-size: 14px; color: var(--text-muted); }
+        .footer-left a { color: var(--accent-orange); text-decoration: none; font-weight: 500; }
 
         .update-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--text-muted);
-            background: var(--bg-secondary);
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 10px; font-size: 13px;
+            color: var(--text-muted); background: var(--bg-secondary);
+            padding: 10px 20px; border-radius: 8px; border: 1px solid var(--border-color);
         }
 
-        .update-info .value {
-            color: var(--accent-orange);
-            font-weight: 600;
-        }
+        .update-info .value { color: var(--accent-orange); font-weight: 600; }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            .cover-title, .flip-word {
-                font-size: 36px;
-            }
-
-            .cover-subtitle {
-                font-size: 16px;
-                padding: 0 20px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .instructions-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .main-content {
-                padding: 40px 20px;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-
-            .subscription-header {
-                flex-direction: column;
-                gap: 16px;
-                align-items: flex-start;
-            }
-
-            .scroll-container {
-                bottom: 40px;
-            }
+            .cover-title, .flip-word { font-size: 36px; }
+            .cover-subtitle { font-size: 16px; padding: 0 20px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .instructions-grid { grid-template-columns: 1fr; }
+            .main-content { padding: 40px 20px; }
+            .btn-group { flex-direction: column; }
+            .subscription-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .scroll-container { bottom: 40px; }
+            .pin-card-content { width: 16rem; }
         }
 
         @media (max-width: 480px) {
-            .cover-title, .flip-word {
-                font-size: 28px;
-            }
+            .cover-title, .flip-word { font-size: 28px; }
+            .pin-card-content { width: 14rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Grid and Dot Backgrounds -->
     <div class="grid-dot-bg"></div>
 
-    <!-- Cover Section -->
     <section class="cover-section">
         <div class="cover-content">
             <div class="cover-title-wrapper">
@@ -689,20 +415,15 @@
             </div>
             <p class="cover-subtitle">自动化抓取 · 智能去重 · 每日更新<br>安静、持续、稳定运行，全程无需干预</p>
         </div>
-        
         <div class="scroll-container">
             <span class="scroll-text">下滑查看详情</span>
             <div class="scroll-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                    <path d="M7 13l5 5 5-5"/>
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 13l5 5 5-5"/></svg>
             </div>
         </div>
     </section>
 
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Stats -->
         <div class="stats-grid">
             <div class="card stat-card">
                 <div class="stat-value" id="clash-count">--</div>
@@ -718,7 +439,6 @@
             </div>
         </div>
 
-        <!-- Subscriptions -->
         <div class="card subscription-card active" id="clash-card">
             <div class="subscription-header" onclick="toggleCard('clash-card')">
                 <div class="subscription-icon">CL</div>
@@ -736,21 +456,16 @@
                         <div class="terminal-title">订阅地址</div>
                     </div>
                     <div class="terminal-body">
-                        <span class="prompt">$ </span>curl -o clash.yaml <span id="clash-url">https://kunkun8888666.github.io/youyapai/output/clash.yaml</span>
+                        <span id="clash-url">https://kunkun8888666.github.io/youyapai/output/clash.yaml</span>
                     </div>
                 </div>
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="copyUrl('clash-url', event)">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2"/>
-                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                        </svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
                         复制链接
                     </button>
                     <a href="https://kunkun8888666.github.io/youyapai/output/clash.yaml" class="btn btn-secondary" download>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                        </svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                         下载文件
                     </a>
                 </div>
@@ -774,73 +489,93 @@
                         <div class="terminal-title">订阅地址</div>
                     </div>
                     <div class="terminal-body">
-                        <span class="prompt">$ </span>curl -o v2ray.yaml <span id="v2ray-url">https://kunkun8888666.github.io/youyapai/output/v2ray.yaml</span>
+                        <span id="v2ray-url">https://kunkun8888666.github.io/youyapai/output/v2ray.yaml</span>
                     </div>
                 </div>
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="copyUrl('v2ray-url', event)">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2"/>
-                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                        </svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
                         复制链接
                     </button>
                     <a href="https://kunkun8888666.github.io/youyapai/output/v2ray.yaml" class="btn btn-secondary" download>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                        </svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                         下载文件
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Instructions with 3D Animated Pin -->
+        <!-- 3D Animated Pin - Aceternity UI -->
         <div class="instructions-section">
             <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 40px; color: var(--accent-orange);">使用说明</h3>
             <div class="instructions-grid">
                 <div class="pin-container" onclick="scrollToCard('clash-card')">
-                    <div class="pin-wrapper">
-                        <div class="pin-title">Clash / Mihomo</div>
-                        <div class="pin">
-                            <span class="pin-text">CL</span>
-                        </div>
-                        <div class="pin-line"></div>
-                        <div class="pin-ripple"></div>
-                        <div class="pin-card">
+                    <div class="pin-3d-card">
+                        <div class="pin-3d-inner">
                             <div class="pin-card-content">
                                 <h4 class="pin-card-title">Clash 客户端</h4>
                                 <div class="pin-card-desc">
-                                    <span>复制订阅地址，打开 Clash 或 Mihomo，粘贴导入即可使用。默认启用节点自动选择功能。</span>
+                                    <span>复制订阅地址，打开 Clash 或 Mihomo，粘贴导入即可使用。</span>
                                 </div>
+                                <div class="pin-card-gradient"></div>
                             </div>
                         </div>
-                        <div class="pin-shadow"></div>
+                    </div>
+                    <div class="pin-perspective">
+                        <div class="pin-perspective-inner">
+                            <div class="pin-perspective-title">
+                                <a href="javascript:void(0)">
+                                    <span>Clash / Mihomo</span>
+                                    <span class="title-line"></span>
+                                </a>
+                            </div>
+                            <div class="pin-perspective-ripples">
+                                <div class="pin-ripple-ring"></div>
+                                <div class="pin-ripple-ring"></div>
+                                <div class="pin-ripple-ring"></div>
+                            </div>
+                            <div class="pin-perspective-line"></div>
+                            <div class="pin-perspective-line-solid"></div>
+                            <div class="pin-perspective-dot-blur"></div>
+                            <div class="pin-perspective-dot"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="pin-container" onclick="scrollToCard('v2ray-card')">
-                    <div class="pin-wrapper">
-                        <div class="pin-title">V2Ray / 影梭</div>
-                        <div class="pin">
-                            <span class="pin-text">V2</span>
-                        </div>
-                        <div class="pin-line"></div>
-                        <div class="pin-ripple"></div>
-                        <div class="pin-card">
+                    <div class="pin-3d-card">
+                        <div class="pin-3d-inner">
                             <div class="pin-card-content">
                                 <h4 class="pin-card-title">V2Ray 客户端</h4>
                                 <div class="pin-card-desc">
-                                    <span>适用于 V2RayN、V2RayNG、Shadowrocket 等支持 URI 导入格式的客户端。</span>
+                                    <span>适用于 V2RayN、V2RayNG、Shadowrocket 等客户端。</span>
                                 </div>
+                                <div class="pin-card-gradient"></div>
                             </div>
                         </div>
-                        <div class="pin-shadow"></div>
+                    </div>
+                    <div class="pin-perspective">
+                        <div class="pin-perspective-inner">
+                            <div class="pin-perspective-title">
+                                <a href="javascript:void(0)">
+                                    <span>V2Ray / 影梭</span>
+                                    <span class="title-line"></span>
+                                </a>
+                            </div>
+                            <div class="pin-perspective-ripples">
+                                <div class="pin-ripple-ring"></div>
+                                <div class="pin-ripple-ring"></div>
+                                <div class="pin-ripple-ring"></div>
+                            </div>
+                            <div class="pin-perspective-line"></div>
+                            <div class="pin-perspective-line-solid"></div>
+                            <div class="pin-perspective-dot-blur"></div>
+                            <div class="pin-perspective-dot"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="footer-left">
                 项目地址 <a href="https://github.com/kunkun8888666/youyapai" target="_blank">GitHub</a>
@@ -855,23 +590,26 @@
     <script>
         async function loadStats() {
             try {
-                const response = await fetch('https://kunkun8888666.github.io/youyapai/output/stats.json');
+                const response = await fetch('output/stats.json');
                 const stats = await response.json();
-                
                 document.getElementById('clash-count').textContent = stats.clash_nodes;
                 document.getElementById('v2ray-count').textContent = stats.v2ray_nodes;
                 document.getElementById('update-date').textContent = stats.update_date;
             } catch (error) {
-                console.error('加载数据失败:', error);
-                document.getElementById('clash-count').textContent = '228';
-                document.getElementById('v2ray-count').textContent = '227';
-                document.getElementById('update-date').textContent = new Date().toISOString().split('T')[0];
+                try {
+                    const response = await fetch('https://kunkun8888666.github.io/youyapai/output/stats.json');
+                    const stats = await response.json();
+                    document.getElementById('clash-count').textContent = stats.clash_nodes;
+                    document.getElementById('v2ray-count').textContent = stats.v2ray_nodes;
+                    document.getElementById('update-date').textContent = stats.update_date;
+                } catch (e) {
+                    document.getElementById('update-date').textContent = new Date().toISOString().split('T')[0];
+                }
             }
         }
 
         function toggleCard(cardId) {
-            const card = document.getElementById(cardId);
-            card.classList.toggle('active');
+            document.getElementById(cardId).classList.toggle('active');
         }
 
         function scrollToCard(cardId) {
@@ -882,73 +620,32 @@
 
         function copyUrl(elementId, event) {
             event.stopPropagation();
-            const urlElement = document.getElementById(elementId);
-            const url = urlElement.textContent.trim();
-            
+            const url = document.getElementById(elementId).textContent.trim();
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(url).then(() => {
-                    showCopyFeedback(event.target);
-                }).catch(() => {
-                    fallbackCopy(url);
-                });
+                    showCopyFeedback(event.target.closest('.btn'));
+                }).catch(() => { fallbackCopy(url); });
             } else {
                 fallbackCopy(url);
             }
         }
 
         function fallbackCopy(text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.cssText = 'position:fixed;opacity:0;';
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-                document.execCommand('copy');
-            } catch (err) {
-                console.error('复制失败');
-            }
-            document.body.removeChild(textArea);
+            const ta = document.createElement('textarea');
+            ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;';
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); } catch (e) {}
+            document.body.removeChild(ta);
         }
 
         function showCopyFeedback(button) {
-            const originalText = button.innerHTML;
+            const orig = button.innerHTML;
             button.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 已复制';
             button.style.background = '#22c55e';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = '';
-            }, 2000);
+            setTimeout(() => { button.innerHTML = orig; button.style.background = ''; }, 2000);
         }
 
-        function add3DEffect() {
-            const wrappers = document.querySelectorAll('.pin-wrapper');
-            
-            wrappers.forEach(wrapper => {
-                wrapper.addEventListener('mousemove', (e) => {
-                    const rect = wrapper.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = (y - centerY) / 12;
-                    const rotateY = (centerX - x) / 12;
-                    const translateY = -15;
-                    
-                    wrapper.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${translateY}px)`;
-                });
-                
-                wrapper.addEventListener('mouseleave', () => {
-                    wrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-                });
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadStats();
-            add3DEffect();
-        });
+        document.addEventListener('DOMContentLoaded', loadStats);
     </script>
 </body>
 </html>
