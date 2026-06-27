@@ -1,7 +1,12 @@
 {
+<<<<<<< HEAD
   "clash_nodes": 385,
   "v2ray_nodes": 270,
   "total_nodes": 655,
+=======
+  "clash_nodes": 351,
+  "v2ray_nodes": 251,
+>>>>>>> a5f59ab2c44de0dd6949e2066284fca4a18e0d2e
   "update_date": "2026-06-27",
   "sources": [
     "yoyapai.com",
