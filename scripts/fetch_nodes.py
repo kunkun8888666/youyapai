@@ -872,11 +872,13 @@ def main() -> int:
         proto = u.split("://")[0].lower() if "://" in u else "unknown"
         proto_counts[proto] = proto_counts.get(proto, 0) + 1
 
+    now = dt.datetime.now(BEIJING_TZ)
     stats_data = {
         "clash_nodes": len(clash_proxies),
         "v2ray_nodes": len(v2ray_urls),
         "total_nodes": len(clash_proxies) + len(v2ray_urls),
         "update_date": today.isoformat(),
+        "last_updated": now.strftime("%Y-%m-%d %H:%M"),
         "sources": active_sources,
         "source_count": len(active_sources),
         "retention_days": RETENTION_DAYS,

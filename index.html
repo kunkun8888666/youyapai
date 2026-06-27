@@ -576,16 +576,6 @@
 
         <div class="card">
             <div class="section-title">
-                协议
-                <span class="badge" id="proto-date">实时</span>
-            </div>
-            <div class="sources-row" id="proto-list">
-                <span class="source-badge">加载中...</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="section-title">
                 数据来源
                 <span class="badge" id="source-badge-count">0 个</span>
             </div>
@@ -593,6 +583,10 @@
                 <span class="source-badge">加载中...</span>
             </div>
             <div class="status-bar">
+                <div class="status-item">
+                    <span class="label">最后更新</span>
+                    <span class="value" id="update-date">--</span>
+                </div>
                 <div class="status-item">
                     <span class="label">抓取天数</span>
                     <span class="value" id="retention-days">7</span>
@@ -1010,24 +1004,6 @@
             requestAnimationFrame(step);
         }
 
-        function renderProtocols(stats) {
-            var protoEl = document.getElementById('proto-list');
-            if (!protoEl) return;
-            protoEl.innerHTML = '';
-            var protos = stats.protocols || {};
-            var keys = Object.keys(protos);
-            if (keys.length === 0) {
-                protoEl.innerHTML = '<span class="source-badge">无数据</span>';
-                return;
-            }
-            keys.forEach(function(k) {
-                var badge = document.createElement('span');
-                badge.className = 'source-badge';
-                badge.innerHTML = '<span class="dot"></span>' + k.toUpperCase() + ' ' + protos[k];
-                protoEl.appendChild(badge);
-            });
-        }
-
         async function loadStats() {
             try {
                 var resp = await fetch('output/stats.json');
@@ -1036,7 +1012,7 @@
                 animateValue(document.getElementById('clash-count'), stats.clash_nodes);
                 animateValue(document.getElementById('v2ray-count'), stats.v2ray_nodes);
                 animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
-                document.getElementById('update-date').textContent = stats.update_date;
+                document.getElementById('update-date').textContent = stats.last_updated || stats.update_date;
 
                 var sourcesEl = document.getElementById('sources-list');
                 sourcesEl.innerHTML = '';
@@ -1051,7 +1027,6 @@
                 if (stats.retention_days) {
                     document.getElementById('retention-days').textContent = stats.retention_days;
                 }
-                renderProtocols(stats);
             } catch (e) {
                 try {
                     var resp = await fetch('https://kunkun8888666.github.io/youyapai/output/stats.json');
@@ -1060,7 +1035,7 @@
                     animateValue(document.getElementById('clash-count'), stats.clash_nodes);
                     animateValue(document.getElementById('v2ray-count'), stats.v2ray_nodes);
                     animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
-                    document.getElementById('update-date').textContent = stats.update_date;
+                    document.getElementById('update-date').textContent = stats.last_updated || stats.update_date;
                     var sourcesEl = document.getElementById('sources-list');
                     sourcesEl.innerHTML = '';
                     (stats.sources || []).forEach(function(s) {
@@ -1070,9 +1045,8 @@
                         sourcesEl.appendChild(badge);
                     });
                     document.getElementById('source-badge-count').textContent = (stats.sources || []).length + ' 个';
-                    renderProtocols(stats);
                 } catch (e2) {
-                    document.getElementById('update-date').textContent = new Date().toISOString().split('T')[0];
+                    document.getElementById('update-date').textContent = new Date().toLocaleString('zh-CN', {timeZone:'Asia/Shanghai'});
                 }
             }
         }
