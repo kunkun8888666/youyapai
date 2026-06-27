@@ -4,7 +4,8 @@
 Fetches the latest 3 days of free node subscription content from:
   - yoyapai.com
   - clash-rs.com
-  - clashbest.github.io
+  - nodefree.me
+  - surfboard.cc
 
 Parses the nodes, deduplicates by (server, port, protocol), and outputs
 standard-format config files for Clash/Mihomo and V2Ray clients.
@@ -14,12 +15,14 @@ from __future__ import annotations
 
 import argparse
 import base64
+import concurrent.futures
 import datetime as dt
 import html
 import json
 import re
 import ssl
 import sys
+import threading
 import time
 from dataclasses import dataclass
 from html.parser import HTMLParser
@@ -41,6 +44,13 @@ YOYAPAI_V2RAY_LABEL = "<strong>V2Ray免费节点订阅地址：</strong>"
 CLASHRS_LIST_URL = "https://clash-rs.com/free-node/"
 CLASHRS_CLASH_LABEL = "clash订阅链接"
 CLASHRS_V2RAY_LABEL = "v2ray订阅链接"
+
+NODEFREE_LIST_URL = "https://nodefree.me/"
+
+SURFBOARD_LIST_URL = "https://surfboard.cc/free-node/"
+SURFBOARD_MAX_PAGES = 2
+
+
 
 HEADERS = {
     "User-Agent": (
@@ -96,11 +106,18 @@ class LinkParser(HTMLParser):
         self._text = []
 
 
+_fetch_cache: dict[str, str] = {}
+_fetch_lock = threading.Lock()
+
+
 def log(message: str) -> None:
     print(f"[fetch] {message}", flush=True)
 
 
-def fetch_text(url: str, timeout: int = 30, retries: int = 3, referer: str = "") -> str | None:
+def fetch_text(url: str, timeout: int = 15, retries: int = 2, referer: str = "") -> str | None:
+    with _fetch_lock:
+        if url in _fetch_cache:
+            return _fetch_cache[url]
     headers = dict(HEADERS)
     if referer:
         headers["Referer"] = referer
@@ -109,12 +126,38 @@ def fetch_text(url: str, timeout: int = 30, retries: int = 3, referer: str = "")
             request = Request(url, headers=headers)
             with urlopen(request, timeout=timeout, context=SSL_CONTEXT) as response:
                 raw = response.read()
-                return decode_html(raw, response.headers.get_content_charset())
+                result = decode_html(raw, response.headers.get_content_charset())
+                with _fetch_lock:
+                    _fetch_cache[url] = result
+                return result
         except (HTTPError, URLError, TimeoutError, ConnectionResetError, OSError) as exc:
             log(f"fetch failed ({attempt}/{retries}) {url}: {exc}")
             if attempt < retries:
                 time.sleep(attempt * 2)
+    with _fetch_lock:
+        _fetch_cache[url] = ""
     return None
+
+
+def fetch_texts(urls: list[str], referer: str = "") -> dict[str, str]:
+    results: dict[str, str] = {}
+    to_fetch = [u for u in urls if u not in _fetch_cache]
+    if not to_fetch:
+        return {u: _fetch_cache[u] for u in urls if _fetch_cache.get(u)}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
+        future_map = {pool.submit(fetch_text, u, 15, 2, referer): u for u in to_fetch}
+        for future in concurrent.futures.as_completed(future_map):
+            try:
+                content = future.result()
+                if content:
+                    results[future_map[future]] = content
+            except Exception:
+                pass
+    for url in set(urls) - set(to_fetch):
+        cached = _fetch_cache.get(url)
+        if cached:
+            results[url] = cached
+    return results
 
 
 def decode_html(raw: bytes, header_charset: str | None) -> str:
@@ -221,62 +264,36 @@ def append_cache_buster(url: str) -> str:
 
 def fetch_yoyapai(today: dt.date, target_dates: list[dt.date]) -> tuple[list[str], list[str]]:
     log("fetching from yoyapai.com ...")
-    clash_contents: list[str] = []
-    v2ray_contents: list[str] = []
+    sub_urls: list[str] = []
 
     list_html = fetch_text(append_cache_buster(YOYAPAI_LIST_URL), referer="https://yoyapai.com/")
     if not list_html:
-        log("yoyapai list page unavailable; trying fallback subscription url patterns")
+        log("yoyapai list page unavailable; trying fallback")
         for target_date in target_dates:
-            clash_url, v2ray_url = yoyapai_fallback_subscription_urls(target_date)
-            cc = fetch_text(clash_url, referer="https://yoyapai.com/")
-            vc = fetch_text(v2ray_url, referer="https://yoyapai.com/")
-            if cc:
-                clash_contents.append(cc)
-            if vc:
-                v2ray_contents.append(vc)
-        return clash_contents, v2ray_contents
+            sub_urls.extend(yoyapai_fallback_subscription_urls(target_date))
+        return _fetch_and_classify(sub_urls, "https://yoyapai.com/")
 
     child_pages = yoyapai_find_child_pages(list_html, today)
     for target_date in target_dates:
+        fallback_clash, fallback_v2ray = yoyapai_fallback_subscription_urls(target_date)
         candidate = child_pages.get(target_date)
-        fallback_clash_url, fallback_v2ray_url = yoyapai_fallback_subscription_urls(target_date)
-
         if not candidate:
-            log(f"yoyapai: child page not found for {target_date.isoformat()}; using fallback")
-            cc = fetch_text(fallback_clash_url, referer="https://yoyapai.com/")
-            vc = fetch_text(fallback_v2ray_url, referer="https://yoyapai.com/")
-            if cc:
-                clash_contents.append(cc)
-            if vc:
-                v2ray_contents.append(vc)
+            log(f"yoyapai: no child page for {target_date.isoformat()}; using fallback")
+            sub_urls.extend([fallback_clash, fallback_v2ray])
             continue
 
         log(f"yoyapai: child page for {target_date.isoformat()}: {candidate.url}")
         page_html = fetch_text(candidate.url, referer="https://yoyapai.com/")
         if not page_html:
-            log(f"yoyapai: child page unavailable for {target_date.isoformat()}; using fallback")
-            cc = fetch_text(fallback_clash_url, referer="https://yoyapai.com/")
-            vc = fetch_text(fallback_v2ray_url, referer="https://yoyapai.com/")
-            if cc:
-                clash_contents.append(cc)
-            if vc:
-                v2ray_contents.append(vc)
+            log(f"yoyapai: article unavailable for {target_date.isoformat()}; using fallback")
+            sub_urls.extend([fallback_clash, fallback_v2ray])
             continue
 
-        clash_url = extract_after_label(page_html, YOYAPAI_CLASH_LABEL, candidate.url) or fallback_clash_url
-        v2ray_url = extract_after_label(page_html, YOYAPAI_V2RAY_LABEL, candidate.url) or fallback_v2ray_url
-        log(f"yoyapai: Clash sub for {target_date.isoformat()}: {clash_url}")
-        log(f"yoyapai: V2Ray sub for {target_date.isoformat()}: {v2ray_url}")
+        clash_url = extract_after_label(page_html, YOYAPAI_CLASH_LABEL, candidate.url) or fallback_clash
+        v2ray_url = extract_after_label(page_html, YOYAPAI_V2RAY_LABEL, candidate.url) or fallback_v2ray
+        sub_urls.extend([clash_url, v2ray_url])
 
-        cc = fetch_text(clash_url, referer="https://yoyapai.com/")
-        vc = fetch_text(v2ray_url, referer="https://yoyapai.com/")
-        if cc:
-            clash_contents.append(cc)
-        if vc:
-            v2ray_contents.append(vc)
-
-    return clash_contents, v2ray_contents
+    return _fetch_and_classify(sub_urls, "https://yoyapai.com/")
 
 
 def yoyapai_find_child_pages(list_html: str, today: dt.date) -> dict[dt.date, Candidate]:
@@ -314,44 +331,29 @@ def yoyapai_fallback_subscription_urls(target_date: dt.date) -> tuple[str, str]:
 
 def fetch_clashrs(today: dt.date, target_dates: list[dt.date]) -> tuple[list[str], list[str]]:
     log("fetching from clash-rs.com ...")
-    clash_contents: list[str] = []
-    v2ray_contents: list[str] = []
+    sub_urls: list[str] = []
 
     list_html = fetch_text(CLASHRS_LIST_URL, referer="https://clash-rs.com/")
     if not list_html:
         log("clash-rs: list page unavailable")
-        return clash_contents, v2ray_contents
+        return [], []
 
-    log(f"clash-rs: list page length: {len(list_html)}")
     article_links = clashrs_find_articles(list_html, target_dates)
     for target_date in target_dates:
         article_url = article_links.get(target_date)
         if not article_url:
-            log(f"clash-rs: no article found for {target_date.isoformat()}")
+            log(f"clash-rs: no article for {target_date.isoformat()}")
             continue
 
         log(f"clash-rs: article for {target_date.isoformat()}: {article_url}")
         page_html = fetch_text(article_url, referer="https://clash-rs.com/")
         if not page_html:
-            log(f"clash-rs: article unavailable for {target_date.isoformat()}")
             continue
 
-        clash_urls = clashrs_extract_sub_urls(page_html, CLASHRS_CLASH_LABEL, article_url)
-        v2ray_urls = clashrs_extract_sub_urls(page_html, CLASHRS_V2RAY_LABEL, article_url)
+        sub_urls.extend(clashrs_extract_sub_urls(page_html, CLASHRS_CLASH_LABEL, article_url))
+        sub_urls.extend(clashrs_extract_sub_urls(page_html, CLASHRS_V2RAY_LABEL, article_url))
 
-        log(f"clash-rs: found {len(clash_urls)} Clash URLs, {len(v2ray_urls)} V2Ray URLs for {target_date.isoformat()}")
-
-        for url in clash_urls:
-            cc = fetch_text(url, referer="https://clash-rs.com/")
-            if cc:
-                clash_contents.append(cc)
-
-        for url in v2ray_urls:
-            vc = fetch_text(url, referer="https://clash-rs.com/")
-            if vc:
-                v2ray_contents.append(vc)
-
-    return clash_contents, v2ray_contents
+    return _fetch_and_classify(sub_urls, "https://clash-rs.com/")
 
 
 def clashrs_find_articles(list_html: str, target_dates: list[dt.date]) -> dict[dt.date, str]:
@@ -390,8 +392,127 @@ def clashrs_extract_sub_urls(page_html: str, label: str, base_url: str) -> list[
 
 
 # ---------------------------------------------------------------------------
-# Shared extraction helpers
+# nodefree.me source
 # ---------------------------------------------------------------------------
+
+def fetch_nodefree(today: dt.date, target_dates: list[dt.date]) -> tuple[list[str], list[str]]:
+    log("fetching from nodefree.me ...")
+    sub_urls: list[str] = []
+
+    list_html = fetch_text(NODEFREE_LIST_URL, referer=NODEFREE_LIST_URL)
+    if not list_html:
+        log("nodefree: list page unavailable")
+        return [], []
+
+    for article_url in nodefree_find_articles(list_html):
+        page_html = fetch_text(article_url, referer=NODEFREE_LIST_URL)
+        if not page_html:
+            continue
+        found = re.findall(r'https://node\.nodefree\.me/[^\s<>"\']+(?:\.yaml|\.yml|\.txt)', page_html)
+        for url in found:
+            date_match = re.search(r'(\d{4})(\d{2})(\d{2})', url)
+            if not date_match:
+                continue
+            try:
+                sub_date = dt.date(int(date_match.group(1)), int(date_match.group(2)), int(date_match.group(3)))
+            except ValueError:
+                continue
+            if sub_date in target_dates:
+                sub_urls.append(url)
+
+    return _fetch_and_classify(sub_urls, NODEFREE_LIST_URL)
+
+
+def nodefree_find_articles(list_html: str) -> list[str]:
+    hrefs = re.findall(r'href="([^"]*)"', list_html)
+    articles: list[str] = []
+    seen: set[str] = set()
+    for href in hrefs:
+        match = re.search(r'/p/(\d+)\.html', href)
+        if match:
+            full_url = normalize_url(href, NODEFREE_LIST_URL)
+            if full_url not in seen:
+                seen.add(full_url)
+                articles.append((full_url, int(match.group(1))))
+    articles.sort(key=lambda x: -x[1])
+    return [url for url, _ in articles]
+
+
+# ---------------------------------------------------------------------------
+# surfboard.cc source
+# ---------------------------------------------------------------------------
+
+def fetch_surfboard(today: dt.date, target_dates: list[dt.date]) -> tuple[list[str], list[str]]:
+    log("fetching from surfboard.cc ...")
+    sub_urls: list[str] = []
+
+    articles: dict[dt.date, str] = {}
+    for page_num in range(1, SURFBOARD_MAX_PAGES + 1):
+        page_url = SURFBOARD_LIST_URL if page_num == 1 else f"{SURFBOARD_LIST_URL}?page={page_num}"
+        list_html = fetch_text(page_url, referer=SURFBOARD_LIST_URL)
+        if not list_html:
+            continue
+        for d, url in surfboard_find_articles(list_html, target_dates).items():
+            if d not in articles:
+                articles[d] = url
+
+    for target_date in target_dates:
+        article_url = articles.get(target_date)
+        if not article_url:
+            continue
+        log(f"surfboard: article for {target_date.isoformat()}: {article_url}")
+        page_html = fetch_text(article_url, referer=SURFBOARD_LIST_URL)
+        if not page_html:
+            continue
+        sub_urls.extend(re.findall(r'https://node\.surfboard\.cc/[^\s<>"\']+', page_html))
+
+    return _fetch_and_classify(sub_urls, SURFBOARD_LIST_URL)
+
+
+def surfboard_find_articles(list_html: str, target_dates: list[dt.date]) -> dict[dt.date, str]:
+    articles: dict[dt.date, str] = {}
+    hrefs = re.findall(r'href="([^"]*)"', list_html)
+    for href in hrefs:
+        if "/free-node/" not in href or not href.endswith(".htm"):
+            continue
+        if href == "/free-node/" or not re.search(r'/\d{4}-\d{1,2}-\d{1,2}', href):
+            continue
+        full_url = normalize_url(href, SURFBOARD_LIST_URL)
+        match = re.search(r'(\d{4})-(\d{1,2})-(\d{1,2})', href)
+        if not match:
+            continue
+        try:
+            page_date = dt.date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
+        except ValueError:
+            continue
+        if page_date in target_dates and page_date not in articles:
+            articles[page_date] = full_url
+    return articles
+
+
+
+# ---------------------------------------------------------------------------
+# Generic helpers
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Shared helpers
+# ---------------------------------------------------------------------------
+
+def _fetch_and_classify(urls: list[str], referer: str) -> tuple[list[str], list[str]]:
+    if not urls:
+        return [], []
+    deduped = list(dict.fromkeys(urls))
+    results = fetch_texts(deduped, referer)
+    clash: list[str] = []
+    v2ray: list[str] = []
+    for url, content in results.items():
+        if url.endswith((".yaml", ".yml")):
+            clash.append(content)
+        else:
+            v2ray.append(content)
+    return clash, v2ray
+
 
 def extract_after_label(page_html: str, label: str, base_url: str) -> str | None:
     label_pos = page_html.find(label)
@@ -695,6 +816,22 @@ def main() -> int:
         active_sources.append("clash-rs.com")
         log(f"clash-rs: {len(clashrs_clash)} Clash, {len(clashrs_v2ray)} V2Ray contents")
 
+    # Source 3: nodefree.org
+    nodefree_clash, nodefree_v2ray = fetch_nodefree(today, target_dates)
+    if nodefree_clash or nodefree_v2ray:
+        all_clash_contents.extend(nodefree_clash)
+        all_v2ray_contents.extend(nodefree_v2ray)
+        active_sources.append("nodefree.me")
+        log(f"nodefree: {len(nodefree_clash)} Clash, {len(nodefree_v2ray)} V2Ray contents")
+
+    # Source 4: surfboard.cc
+    sfb_clash, sfb_v2ray = fetch_surfboard(today, target_dates)
+    if sfb_clash or sfb_v2ray:
+        all_clash_contents.extend(sfb_clash)
+        all_v2ray_contents.extend(sfb_v2ray)
+        active_sources.append("surfboard.cc")
+        log(f"surfboard: {len(sfb_clash)} Clash, {len(sfb_v2ray)} V2Ray contents")
+
     if not active_sources:
         log("no subscription content fetched from any source")
         return 1
@@ -730,8 +867,11 @@ def main() -> int:
     stats_data = {
         "clash_nodes": len(clash_proxies),
         "v2ray_nodes": len(v2ray_urls),
+        "total_nodes": len(clash_proxies) + len(v2ray_urls),
         "update_date": today.isoformat(),
         "sources": active_sources,
+        "source_count": len(active_sources),
+        "retention_days": RETENTION_DAYS,
     }
     stats_path.write_text(json.dumps(stats_data, ensure_ascii=False, indent=2), encoding="utf-8")
 

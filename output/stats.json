@@ -1,9 +1,14 @@
 {
-  "clash_nodes": 325,
-  "v2ray_nodes": 251,
-  "update_date": "2026-06-26",
+  "clash_nodes": 385,
+  "v2ray_nodes": 270,
+  "total_nodes": 655,
+  "update_date": "2026-06-27",
   "sources": [
     "yoyapai.com",
-    "clash-rs.com"
-  ]
+    "clash-rs.com",
+    "nodefree.me",
+    "surfboard.cc"
+  ],
+  "source_count": 4,
+  "retention_days": 3
 }
