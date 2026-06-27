@@ -484,6 +484,9 @@
             75% { content: '...'; }
         }
 
+        @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+        #update-date { animation: fadeIn 0.6s ease-out both; }
+
         .footer {
             margin-top: 80px; padding-top: 40px;
             border-top: 1px solid var(--border-color);
@@ -1012,6 +1015,7 @@
                 animateValue(document.getElementById('clash-count'), stats.clash_nodes);
                 animateValue(document.getElementById('v2ray-count'), stats.v2ray_nodes);
                 animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
+                document.getElementById('update-date').textContent = stats.update_date;
                 var sourcesEl = document.getElementById('sources-list');
                 sourcesEl.innerHTML = '';
                 (stats.sources || []).forEach(function(s) {
@@ -1033,6 +1037,7 @@
                     animateValue(document.getElementById('clash-count'), stats.clash_nodes);
                     animateValue(document.getElementById('v2ray-count'), stats.v2ray_nodes);
                     animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
+                    document.getElementById('update-date').textContent = stats.update_date;
                     var sourcesEl = document.getElementById('sources-list');
                     sourcesEl.innerHTML = '';
                     (stats.sources || []).forEach(function(s) {
@@ -1044,21 +1049,6 @@
                     document.getElementById('source-badge-count').textContent = (stats.sources || []).length + ' 个';
                 } catch (e2) {}
             }
-        }
-
-        async function fetchLastRunTime() {
-            var ts = Date.now();
-            try {
-                var r = await fetch('output/last_run.json?_=' + ts);
-                var d = await r.json();
-                if (d.last_run) { document.getElementById('update-date').textContent = d.last_run; return; }
-            } catch (_) {}
-            try {
-                var r = await fetch('https://kunkun8888666.github.io/youyapai/output/last_run.json?_=' + ts);
-                var d = await r.json();
-                if (d.last_run) { document.getElementById('update-date').textContent = d.last_run; return; }
-            } catch (_) {}
-            document.getElementById('update-date').textContent = new Date().toLocaleString('zh-CN', {timeZone:'Asia/Shanghai', hour12:false});
         }
 
         function toggleCard(cardId) {
@@ -1093,10 +1083,7 @@
             setTimeout(function() { button.innerHTML = orig; button.style.background = ''; }, 2000);
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            loadStats();
-            fetchLastRunTime();
-        });
+        document.addEventListener('DOMContentLoaded', loadStats);
     </script>
 </body>
 </html>

@@ -38,8 +38,13 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          if git diff --quiet -- output/clash.yaml output/v2ray.yaml output/stats.json; then
+            echo "No subscription file changes."
+            exit 0
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/
+          git add output/clash.yaml output/v2ray.yaml output/stats.json
           git commit -m "chore: update subscriptions and stats"
           git push origin HEAD:${{ github.event.repository.default_branch }}
