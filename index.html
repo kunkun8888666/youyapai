@@ -1012,8 +1012,6 @@
                 animateValue(document.getElementById('clash-count'), stats.clash_nodes);
                 animateValue(document.getElementById('v2ray-count'), stats.v2ray_nodes);
                 animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
-                document.getElementById('update-date').textContent = stats.update_date;
-
                 var sourcesEl = document.getElementById('sources-list');
                 sourcesEl.innerHTML = '';
                 (stats.sources || []).forEach(function(s) {
@@ -1035,7 +1033,6 @@
                     animateValue(document.getElementById('clash-count'), stats.clash_nodes);
                     animateValue(document.getElementById('v2ray-count'), stats.v2ray_nodes);
                     animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
-                    document.getElementById('update-date').textContent = stats.update_date;
                     var sourcesEl = document.getElementById('sources-list');
                     sourcesEl.innerHTML = '';
                     (stats.sources || []).forEach(function(s) {
@@ -1045,9 +1042,7 @@
                         sourcesEl.appendChild(badge);
                     });
                     document.getElementById('source-badge-count').textContent = (stats.sources || []).length + ' 个';
-                } catch (e2) {
-                    document.getElementById('update-date').textContent = new Date().toLocaleString('zh-CN', {timeZone:'Asia/Shanghai'});
-                }
+                } catch (e2) {}
             }
         }
 
@@ -1060,8 +1055,10 @@
                     var utc = new Date(run.created_at);
                     var cn = utc.toLocaleString('zh-CN', {timeZone:'Asia/Shanghai', hour12:false});
                     document.getElementById('update-date').textContent = cn;
+                    return;
                 }
             } catch (_) {}
+            document.getElementById('update-date').textContent = new Date().toLocaleString('zh-CN', {timeZone:'Asia/Shanghai', hour12:false});
         }
 
         function toggleCard(cardId) {
