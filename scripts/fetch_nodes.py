@@ -20,6 +20,7 @@ import datetime as dt
 import html
 import json
 import re
+import socket
 import ssl
 import sys
 import threading
@@ -112,6 +113,16 @@ _fetch_lock = threading.Lock()
 
 def log(message: str) -> None:
     print(f"[fetch] {message}", flush=True)
+
+
+def check_host(host: str, port: int = 443, timeout: int = 5) -> bool:
+    """TCP connect check — more reliable than ICMP ping (no root / cross-platform)."""
+    try:
+        sock = socket.create_connection((host, port), timeout=timeout)
+        sock.close()
+        return True
+    except (socket.timeout, ConnectionRefusedError, OSError):
+        return False
 
 
 def fetch_text(url: str, timeout: int = 15, retries: int = 2, referer: str = "") -> str | None:
@@ -799,38 +810,36 @@ def main() -> int:
     all_clash_contents: list[str] = []
     all_v2ray_contents: list[str] = []
     active_sources: list[str] = []
+    source_statuses: dict[str, dict[str, str]] = {}
 
-    # Source 1: yoyapai.com
-    yoyapai_clash, yoyapai_v2ray = fetch_yoyapai(today, target_dates)
-    if yoyapai_clash or yoyapai_v2ray:
-        all_clash_contents.extend(yoyapai_clash)
-        all_v2ray_contents.extend(yoyapai_v2ray)
-        active_sources.append("yoyapai.com")
-        log(f"yoyapai: {len(yoyapai_clash)} Clash, {len(yoyapai_v2ray)} V2Ray contents")
+    sources_config: list[tuple[str, object]] = [
+        ("yoyapai.com", fetch_yoyapai),
+        ("clash-rs.com", fetch_clashrs),
+        ("nodefree.me", fetch_nodefree),
+        ("surfboard.cc", fetch_surfboard),
+    ]
 
-    # Source 2: clash-rs.com
-    clashrs_clash, clashrs_v2ray = fetch_clashrs(today, target_dates)
-    if clashrs_clash or clashrs_v2ray:
-        all_clash_contents.extend(clashrs_clash)
-        all_v2ray_contents.extend(clashrs_v2ray)
-        active_sources.append("clash-rs.com")
-        log(f"clash-rs: {len(clashrs_clash)} Clash, {len(clashrs_v2ray)} V2Ray contents")
+    for domain, fetch_func in sources_config:
+        status = "ok"
+        reason = ""
 
-    # Source 3: nodefree.org
-    nodefree_clash, nodefree_v2ray = fetch_nodefree(today, target_dates)
-    if nodefree_clash or nodefree_v2ray:
-        all_clash_contents.extend(nodefree_clash)
-        all_v2ray_contents.extend(nodefree_v2ray)
-        active_sources.append("nodefree.me")
-        log(f"nodefree: {len(nodefree_clash)} Clash, {len(nodefree_v2ray)} V2Ray contents")
+        if not check_host(domain):
+            status = "ping_fail"
+            reason = "ping不通"
+            log(f"{domain}: {reason}")
+        else:
+            clash, v2ray = fetch_func(today, target_dates)
+            if clash or v2ray:
+                all_clash_contents.extend(clash)
+                all_v2ray_contents.extend(v2ray)
+                active_sources.append(domain)
+                log(f"{domain}: {len(clash)} Clash, {len(v2ray)} V2Ray contents")
+            else:
+                status = "crawl_fail"
+                reason = "爬虫问题"
+                log(f"{domain}: {reason}")
 
-    # Source 4: surfboard.cc
-    sfb_clash, sfb_v2ray = fetch_surfboard(today, target_dates)
-    if sfb_clash or sfb_v2ray:
-        all_clash_contents.extend(sfb_clash)
-        all_v2ray_contents.extend(sfb_v2ray)
-        active_sources.append("surfboard.cc")
-        log(f"surfboard: {len(sfb_clash)} Clash, {len(sfb_v2ray)} V2Ray contents")
+        source_statuses[domain] = {"status": status, "reason": reason}
 
     if not active_sources:
         log("no subscription content fetched from any source")
@@ -881,6 +890,7 @@ def main() -> int:
         "source_count": len(active_sources),
         "retention_days": RETENTION_DAYS,
         "protocols": proto_counts,
+        "sources_status": source_statuses,
     }
     stats_path.write_text(json.dumps(stats_data, ensure_ascii=False, indent=2), encoding="utf-8")
 

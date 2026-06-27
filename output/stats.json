@@ -12,11 +12,29 @@
   "source_count": 4,
   "retention_days": 3,
   "protocols": {
+    "trojan": 105,
     "vless": 475,
     "ss": 44,
     "vmess": 25,
-    "trojan": 105,
     "hysteria2": 5,
     "socks5": 1
+  },
+  "sources_status": {
+    "yoyapai.com": {
+      "status": "ok",
+      "reason": ""
+    },
+    "clash-rs.com": {
+      "status": "ok",
+      "reason": ""
+    },
+    "nodefree.me": {
+      "status": "ok",
+      "reason": ""
+    },
+    "surfboard.cc": {
+      "status": "ok",
+      "reason": ""
+    }
   }
 }
