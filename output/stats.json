@@ -13,10 +13,10 @@
   "retention_days": 3,
   "protocols": {
     "vless": 475,
-    "trojan": 105,
-    "hysteria2": 5,
     "ss": 44,
     "vmess": 25,
+    "trojan": 105,
+    "hysteria2": 5,
     "socks5": 1
   }
 }
