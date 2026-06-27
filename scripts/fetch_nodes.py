@@ -864,6 +864,14 @@ def main() -> int:
     clash_path.write_text(clash_output, encoding="utf-8")
     v2ray_path.write_text(v2ray_output, encoding="utf-8")
 
+    proto_counts: dict[str, int] = {}
+    for p in clash_proxies:
+        proto = str(p.get("type", "unknown")).lower()
+        proto_counts[proto] = proto_counts.get(proto, 0) + 1
+    for u in v2ray_urls:
+        proto = u.split("://")[0].lower() if "://" in u else "unknown"
+        proto_counts[proto] = proto_counts.get(proto, 0) + 1
+
     stats_data = {
         "clash_nodes": len(clash_proxies),
         "v2ray_nodes": len(v2ray_urls),
@@ -872,6 +880,7 @@ def main() -> int:
         "sources": active_sources,
         "source_count": len(active_sources),
         "retention_days": RETENTION_DAYS,
+        "protocols": proto_counts,
     }
     stats_path.write_text(json.dumps(stats_data, ensure_ascii=False, indent=2), encoding="utf-8")
 

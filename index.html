@@ -576,47 +576,11 @@
 
         <div class="card">
             <div class="section-title">
-                协议分布
+                协议
                 <span class="badge" id="proto-date">实时</span>
             </div>
-            <div class="protocol-chart" id="protocol-chart">
-                <div class="proto-bar-wrapper">
-                    <div class="proto-bar-item">
-                        <div class="proto-bar-header">
-                            <span class="proto-name"><span class="proto-color-dot" style="background:var(--proto-vmess)"></span>VMess</span>
-                            <span class="proto-count" id="proto-vmess-count">0</span>
-                        </div>
-                        <div class="proto-bar-track"><div class="proto-bar-fill" id="proto-vmess-bar" style="background:var(--proto-vmess)"></div></div>
-                    </div>
-                    <div class="proto-bar-item">
-                        <div class="proto-bar-header">
-                            <span class="proto-name"><span class="proto-color-dot" style="background:var(--proto-vless)"></span>VLess</span>
-                            <span class="proto-count" id="proto-vless-count">0</span>
-                        </div>
-                        <div class="proto-bar-track"><div class="proto-bar-fill" id="proto-vless-bar" style="background:var(--proto-vless)"></div></div>
-                    </div>
-                    <div class="proto-bar-item">
-                        <div class="proto-bar-header">
-                            <span class="proto-name"><span class="proto-color-dot" style="background:var(--proto-trojan)"></span>Trojan</span>
-                            <span class="proto-count" id="proto-trojan-count">0</span>
-                        </div>
-                        <div class="proto-bar-track"><div class="proto-bar-fill" id="proto-trojan-bar" style="background:var(--proto-trojan)"></div></div>
-                    </div>
-                    <div class="proto-bar-item">
-                        <div class="proto-bar-header">
-                            <span class="proto-name"><span class="proto-color-dot" style="background:var(--proto-ss)"></span>Shadowsocks</span>
-                            <span class="proto-count" id="proto-ss-count">0</span>
-                        </div>
-                        <div class="proto-bar-track"><div class="proto-bar-fill" id="proto-ss-bar" style="background:var(--proto-ss)"></div></div>
-                    </div>
-                    <div class="proto-bar-item">
-                        <div class="proto-bar-header">
-                            <span class="proto-name"><span class="proto-color-dot" style="background:var(--proto-ssr)"></span>SSR</span>
-                            <span class="proto-count" id="proto-ssr-count">0</span>
-                        </div>
-                        <div class="proto-bar-track"><div class="proto-bar-fill" id="proto-ssr-bar" style="background:var(--proto-ssr)"></div></div>
-                    </div>
-                </div>
+            <div class="sources-row" id="proto-list">
+                <span class="source-badge">加载中...</span>
             </div>
         </div>
 
@@ -1046,9 +1010,22 @@
             requestAnimationFrame(step);
         }
 
-        function animateBar(id, pct) {
-            var bar = document.getElementById(id);
-            if (bar) setTimeout(function() { bar.style.width = pct + '%'; }, 300);
+        function renderProtocols(stats) {
+            var protoEl = document.getElementById('proto-list');
+            if (!protoEl) return;
+            protoEl.innerHTML = '';
+            var protos = stats.protocols || {};
+            var keys = Object.keys(protos);
+            if (keys.length === 0) {
+                protoEl.innerHTML = '<span class="source-badge">无数据</span>';
+                return;
+            }
+            keys.forEach(function(k) {
+                var badge = document.createElement('span');
+                badge.className = 'source-badge';
+                badge.innerHTML = '<span class="dot"></span>' + k.toUpperCase() + ' ' + protos[k];
+                protoEl.appendChild(badge);
+            });
         }
 
         async function loadStats() {
@@ -1074,6 +1051,7 @@
                 if (stats.retention_days) {
                     document.getElementById('retention-days').textContent = stats.retention_days;
                 }
+                renderProtocols(stats);
             } catch (e) {
                 try {
                     var resp = await fetch('https://kunkun8888666.github.io/youyapai/output/stats.json');
@@ -1092,6 +1070,7 @@
                         sourcesEl.appendChild(badge);
                     });
                     document.getElementById('source-badge-count').textContent = (stats.sources || []).length + ' 个';
+                    renderProtocols(stats);
                 } catch (e2) {
                     document.getElementById('update-date').textContent = new Date().toISOString().split('T')[0];
                 }
