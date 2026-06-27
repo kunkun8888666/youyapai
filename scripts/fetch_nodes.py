@@ -860,6 +860,7 @@ def main() -> int:
     clash_path = repo_root / "output" / "clash.yaml"
     v2ray_path = repo_root / "output" / "v2ray.yaml"
     stats_path = repo_root / "output" / "stats.json"
+    last_run_path = repo_root / "output" / "last_run.json"
 
     clash_path.write_text(clash_output, encoding="utf-8")
     v2ray_path.write_text(v2ray_output, encoding="utf-8")
@@ -883,6 +884,9 @@ def main() -> int:
         "protocols": proto_counts,
     }
     stats_path.write_text(json.dumps(stats_data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    now = dt.datetime.now(BEIJING_TZ)
+    last_run_path.write_text(json.dumps({"last_run": now.strftime("%Y-%m-%d %H:%M:%S")}, ensure_ascii=False), encoding="utf-8")
 
     log(f"wrote {clash_path.name} ({len(clash_proxies)} proxies)")
     log(f"wrote {v2ray_path.name} ({len(v2ray_urls)} urls)")

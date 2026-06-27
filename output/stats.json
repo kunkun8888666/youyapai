@@ -12,11 +12,11 @@
   "source_count": 4,
   "retention_days": 3,
   "protocols": {
-    "trojan": 105,
     "vless": 475,
+    "trojan": 105,
+    "hysteria2": 5,
     "ss": 44,
     "vmess": 25,
-    "hysteria2": 5,
     "socks5": 1
   }
 }
