@@ -1012,7 +1012,7 @@
                 animateValue(document.getElementById('clash-count'), stats.clash_nodes);
                 animateValue(document.getElementById('v2ray-count'), stats.v2ray_nodes);
                 animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
-                document.getElementById('update-date').textContent = stats.last_updated || stats.update_date;
+                document.getElementById('update-date').textContent = stats.update_date;
 
                 var sourcesEl = document.getElementById('sources-list');
                 sourcesEl.innerHTML = '';
@@ -1035,7 +1035,7 @@
                     animateValue(document.getElementById('clash-count'), stats.clash_nodes);
                     animateValue(document.getElementById('v2ray-count'), stats.v2ray_nodes);
                     animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
-                    document.getElementById('update-date').textContent = stats.last_updated || stats.update_date;
+                    document.getElementById('update-date').textContent = stats.update_date;
                     var sourcesEl = document.getElementById('sources-list');
                     sourcesEl.innerHTML = '';
                     (stats.sources || []).forEach(function(s) {
@@ -1049,6 +1049,19 @@
                     document.getElementById('update-date').textContent = new Date().toLocaleString('zh-CN', {timeZone:'Asia/Shanghai'});
                 }
             }
+        }
+
+        async function fetchLastRunTime() {
+            try {
+                var r = await fetch('https://api.github.com/repos/kunkun8888666/youyapai/actions/workflows/fetch-nodes.yml/runs?per_page=1&status=success');
+                var d = await r.json();
+                var run = d.workflow_runs && d.workflow_runs[0];
+                if (run) {
+                    var utc = new Date(run.created_at);
+                    var cn = utc.toLocaleString('zh-CN', {timeZone:'Asia/Shanghai', hour12:false});
+                    document.getElementById('update-date').textContent = cn;
+                }
+            } catch (_) {}
         }
 
         function toggleCard(cardId) {
@@ -1083,7 +1096,10 @@
             setTimeout(function() { button.innerHTML = orig; button.style.background = ''; }, 2000);
         }
 
-        document.addEventListener('DOMContentLoaded', loadStats);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            fetchLastRunTime();
+        });
     </script>
 </body>
 </html>

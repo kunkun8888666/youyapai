@@ -3,7 +3,6 @@
   "v2ray_nodes": 270,
   "total_nodes": 655,
   "update_date": "2026-06-27",
-  "last_updated": "2026-06-27 20:03",
   "sources": [
     "yoyapai.com",
     "clash-rs.com",
@@ -13,10 +12,10 @@
   "source_count": 4,
   "retention_days": 3,
   "protocols": {
+    "trojan": 105,
     "vless": 475,
     "ss": 44,
     "vmess": 25,
-    "trojan": 105,
     "hysteria2": 5,
     "socks5": 1
   }
