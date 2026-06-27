@@ -1047,13 +1047,14 @@
         }
 
         async function fetchLastRunTime() {
+            var ts = Date.now();
             try {
-                var r = await fetch('output/last_run.json');
+                var r = await fetch('output/last_run.json?_=' + ts);
                 var d = await r.json();
                 if (d.last_run) { document.getElementById('update-date').textContent = d.last_run; return; }
             } catch (_) {}
             try {
-                var r = await fetch('https://kunkun8888666.github.io/youyapai/output/last_run.json');
+                var r = await fetch('https://kunkun8888666.github.io/youyapai/output/last_run.json?_=' + ts);
                 var d = await r.json();
                 if (d.last_run) { document.getElementById('update-date').textContent = d.last_run; return; }
             } catch (_) {}
