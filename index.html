@@ -590,9 +590,6 @@
                 数据来源
                 <span class="badge" id="source-badge-count">0 个</span>
             </div>
-            <div class="sources-row" id="sources-list">
-                <span class="source-badge">加载中...</span>
-            </div>
             <div class="status-bar">
                 <div class="status-item">
                     <span class="label">最后更新</span>
@@ -1016,21 +1013,8 @@
         }
 
         function renderSources(stats) {
-            var el = document.getElementById('sources-list');
-            if (!el) return;
-            el.innerHTML = '';
-            var statuses = stats.sources_status || {};
-            var domains = Object.keys(statuses);
-            if (domains.length === 0) { domains = stats.sources || []; }
-            domains.forEach(function(s) {
-                var info = statuses[s] || {};
-                var badge = document.createElement('span');
-                badge.className = 'source-badge';
-                var dotClass = (info.status === 'ok' || !info.status) ? 'dot' : 'dot dot-fail';
-                badge.innerHTML = '<span class="' + dotClass + '"></span>' + s;
-                if (info.reason) { badge.title = info.reason; }
-                el.appendChild(badge);
-            });
+            var totalDomains = Object.keys(stats.sources_status || {}).length || (stats.sources || []).length;
+            document.getElementById('source-badge-count').textContent = totalDomains + ' 个';
         }
 
         async function loadStats() {
@@ -1043,8 +1027,6 @@
                 animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
                 document.getElementById('update-date').textContent = stats.update_date;
                 renderSources(stats);
-                var totalDomains = Object.keys(stats.sources_status || {}).length || (stats.sources || []).length;
-                document.getElementById('source-badge-count').textContent = totalDomains + ' 个';
 
                 if (stats.retention_days) {
                     document.getElementById('retention-days').textContent = stats.retention_days;
@@ -1059,8 +1041,6 @@
                     animateValue(document.getElementById('source-count'), stats.source_count || stats.sources.length);
                     document.getElementById('update-date').textContent = stats.update_date;
                     renderSources(stats);
-                    var totalDomains = Object.keys(stats.sources_status || {}).length || (stats.sources || []).length;
-                    document.getElementById('source-badge-count').textContent = totalDomains + ' 个';
                 } catch (e2) {}
             }
         }

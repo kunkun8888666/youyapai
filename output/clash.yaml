@@ -3309,65 +3309,6 @@ proxies:
   password: 6784aee2-0dfe-474f-8446-480259ff9918
   udp: true
 - name: 🇺🇸 US美国(mibei77.com 米贝节点分享)
-  server: '@...'
-  port: 0
-  type: socks5
-  skip-cert-verify: true
-  udp: true
-- name: 🇭🇰 HK香港(mibei77.com 米贝节点分享)
-  server: e1.cover20.ir
-  port: 51570
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: 6SjeAjXcDrovE45S0NyCGgQfIQLSFV04JyMhMtmZiGQ=
-  udp: true
-- name: 🇸🇬 SG新加坡(mibei77.com 米贝节点分享)
-  server: 172.236.154.50
-  port: 443
-  type: trojan
-  password: 114514
-  sni: tjaaa.hhllfly.kdns.fr
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: tjaaa.hhllfly.kdns.fr
-  udp: true
-- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 2
-  server: 72.249.204.157
-  port: 443
-  type: trojan
-  password: 114514
-  sni: tjaaa.hhllfly.kdns.fr
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: tjaaa.hhllfly.kdns.fr
-  udp: true
-- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 4
-  server: 165.215.250.14
-  port: 443
-  type: trojan
-  password: humanity
-  sni: www.ignitelimit.com
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /assignment
-    headers:
-      Host: www.ignitelimit.com
-  udp: true
-- name: 🇦🇹 奥地利(mibei77.com 米贝节点分享)
-  server: vc2606.vip1314.vip
-  port: 30008
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: 951753pjh
-  udp: true
-- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) (2)
   server: 103.177.136.42
   port: 45619
   type: trojan
@@ -3375,7 +3316,7 @@ proxies:
   sni: fr.01.naiun.bilibili.com
   skip-cert-verify: true
   udp: true
-- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 2 (2)
+- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 2
   server: 103.177.136.45
   port: 45553
   type: trojan
@@ -3391,7 +3332,7 @@ proxies:
   sni: ch.01.naiun.bilibili.com
   skip-cert-verify: true
   udp: true
-- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 4 (2)
+- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 4
   server: 103.177.136.45
   port: 41943
   type: trojan
@@ -3453,6 +3394,38 @@ proxies:
   type: trojan
   password: 4f4d1167-ef14-4304-9bce-0740472503ef
   sni: is.01.naiun.bilibili.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 13
+  server: 72.249.204.157
+  port: 443
+  type: trojan
+  password: 114514
+  sni: tjaaa.hhllfly.kdns.fr
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: tjaaa.hhllfly.kdns.fr
+  udp: true
+- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 15
+  server: 165.215.250.14
+  port: 443
+  type: trojan
+  password: humanity
+  sni: www.calmlunch.com
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /assignment
+    headers:
+      Host: www.calmlunch.com
+  udp: true
+- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 16
+  server: '@...'
+  port: 0
+  type: socks5
   skip-cert-verify: true
   udp: true
 - name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 17
@@ -3534,6 +3507,19 @@ proxies:
   sni: TW.catxstar.com
   skip-cert-verify: true
   udp: true
+- name: 🇸🇬 SG新加坡(mibei77.com 米贝节点分享)
+  server: 172.236.154.50
+  port: 443
+  type: trojan
+  password: 114514
+  sni: tjaaa.hhllfly.kdns.fr
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: tjaaa.hhllfly.kdns.fr
+  udp: true
 - name: 🇸🇬 SG新加坡(mibei77.com 米贝节点分享) 2
   server: 141.11.43.124
   port: 443
@@ -3605,6 +3591,20 @@ proxies:
   password: 7e70223b-f331-41d5-9313-02b8d2df2885
   sni: hk.catxstar.com
   skip-cert-verify: true
+  udp: true
+- name: 🇭🇰 HK香港(mibei77.com 米贝节点分享)
+  server: e1.cover20.ir
+  port: 51570
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: 6SjeAjXcDrovE45S0NyCGgQfIQLSFV04JyMhMtmZiGQ=
+  udp: true
+- name: 🇦🇹 奥地利(mibei77.com 米贝节点分享)
+  server: vc2606.vip1314.vip
+  port: 30008
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: 951753pjh
   udp: true
 - name: 8元老牌专线机场：cczzuu.top
   server: efan.dnsefan04881.com
@@ -4151,70 +4151,6 @@ proxies:
     short-id: 65c24aa8
   skip-cert-verify: true
   udp: true
-- name: 🇩🇪 DE德国(mibei77.com 米贝节点分享)
-  server: 52.57.203.89
-  port: 22222
-  type: trojan
-  password: telegram-id-privatevpns
-  sni: trojan.burgerip.co.uk
-  skip-cert-verify: true
-  udp: true
-- name: 🇩🇪 DE德国(mibei77.com 米贝节点分享) 2
-  server: 153.76.112.64
-  port: 1080
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: qSD_rJKu3Xazdb4ybvHupw
-  udp: true
-- name: 🇭🇰 HK香港(mibei77.com 米贝节点分享) (2)
-  server: 68.64.178.42
-  port: 443
-  type: trojan
-  password: 114514
-  sni: tjaaa.hhllfly.kdns.fr
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: tjaaa.hhllfly.kdns.fr
-  udp: true
-- name: 🇭🇰 HK香港(mibei77.com 米贝节点分享) 2 (2)
-  server: 103.219.194.43
-  port: 443
-  type: trojan
-  password: 114514
-  sni: tjaaa.hhllfly.kdns.fr
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: tjaaa.hhllfly.kdns.fr
-  udp: true
-- name: 🇭🇰 HK香港(mibei77.com 米贝节点分享) 3 (2)
-  server: 209.33.160.242
-  port: 443
-  type: trojan
-  password: 114514
-  sni: tjaaa.hhllfly.kdns.fr
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: tjaaa.hhllfly.kdns.fr
-  udp: true
-- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 5 (2)
-  server: 154.37.223.56
-  port: 43203
-  type: vmess
-  uuid: 68bd04a1-0547-46a6-cdb2-c8ac3fce1e67
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: true
-  udp: true
 - name: 🇸🇬 新加坡 Fastly节点
   server: 151.101.10.151
   port: 80
@@ -4360,6 +4296,70 @@ proxies:
     path: /?https://t.me/WangCai2🇨🇳
     headers:
       Host: max-gb1.global.ssl.fastly.net
+- name: 🇩🇪 DE德国(mibei77.com 米贝节点分享)
+  server: 52.57.203.89
+  port: 22222
+  type: trojan
+  password: telegram-id-privatevpns
+  sni: trojan.burgerip.co.uk
+  skip-cert-verify: true
+  udp: true
+- name: 🇩🇪 DE德国(mibei77.com 米贝节点分享) 2
+  server: 153.76.112.64
+  port: 1080
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: qSD_rJKu3Xazdb4ybvHupw
+  udp: true
+- name: 🇭🇰 HK香港(mibei77.com 米贝节点分享) (2)
+  server: 68.64.178.42
+  port: 443
+  type: trojan
+  password: 114514
+  sni: tjaaa.hhllfly.kdns.fr
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: tjaaa.hhllfly.kdns.fr
+  udp: true
+- name: 🇭🇰 HK香港(mibei77.com 米贝节点分享) 2 (2)
+  server: 103.219.194.43
+  port: 443
+  type: trojan
+  password: 114514
+  sni: tjaaa.hhllfly.kdns.fr
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: tjaaa.hhllfly.kdns.fr
+  udp: true
+- name: 🇭🇰 HK香港(mibei77.com 米贝节点分享) 3 (2)
+  server: 209.33.160.242
+  port: 443
+  type: trojan
+  password: 114514
+  sni: tjaaa.hhllfly.kdns.fr
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: tjaaa.hhllfly.kdns.fr
+  udp: true
+- name: 🇺🇸 US美国(mibei77.com 米贝节点分享) 5 (2)
+  server: 154.37.223.56
+  port: 43203
+  type: vmess
+  uuid: 68bd04a1-0547-46a6-cdb2-c8ac3fce1e67
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  udp: true
 - name: 🇺🇸_US_美国 (2)
   type: trojan
   server: 23.149.28.8.sslip.io
@@ -4798,15 +4798,9 @@ proxy-groups:
   - 🇨🇾_CY_塞浦路斯
   - 🇷🇺_RU_俄罗斯
   - 🇺🇸 US美国(mibei77.com 米贝节点分享)
-  - 🇭🇰 HK香港(mibei77.com 米贝节点分享)
-  - 🇸🇬 SG新加坡(mibei77.com 米贝节点分享)
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 2
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 4
-  - 🇦🇹 奥地利(mibei77.com 米贝节点分享)
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) (2)
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 2 (2)
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 3
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 4 (2)
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 4
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 5
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 6
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 7
@@ -4814,6 +4808,9 @@ proxy-groups:
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 9
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 10
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 11
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 13
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 15
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 16
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 17
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 18
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 19
@@ -4822,6 +4819,7 @@ proxy-groups:
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 25
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 33
   - 🇨🇳 TW台湾(mibei77.com 米贝节点分享)
+  - 🇸🇬 SG新加坡(mibei77.com 米贝节点分享)
   - 🇸🇬 SG新加坡(mibei77.com 米贝节点分享) 2
   - 🇮🇳 IN印度(mibei77.com 米贝节点分享)
   - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 2
@@ -4830,6 +4828,8 @@ proxy-groups:
   - 🇲🇾 马来西亚(mibei77.com 米贝节点分享)
   - 🇲🇾 马来西亚(mibei77.com 米贝节点分享) 2
   - 🇲🇾 马来西亚(mibei77.com 米贝节点分享) 5
+  - 🇭🇰 HK香港(mibei77.com 米贝节点分享)
+  - 🇦🇹 奥地利(mibei77.com 米贝节点分享)
   - 8元老牌专线机场：cczzuu.top
   - 🇧🇷 巴西圣保罗 CloudFlare节点
   - 🇺🇸 美国 CloudFlare节点
@@ -4877,12 +4877,6 @@ proxy-groups:
   - 🇺🇸US美國丨yoyapai.com_8
   - 🇺🇸US美國丨yoyapai.com_9
   - 免費節點丨yoyapai.com_3
-  - 🇩🇪 DE德国(mibei77.com 米贝节点分享)
-  - 🇩🇪 DE德国(mibei77.com 米贝节点分享) 2
-  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) (2)
-  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 2 (2)
-  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 3 (2)
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 5 (2)
   - 🇸🇬 新加坡 Fastly节点
   - 🇨🇦 加拿大 不列颠哥伦比亚省温哥华Fastly节点
   - 🇺🇸 美国 加利福尼亚州洛杉矶Fastly节点
@@ -4894,6 +4888,12 @@ proxy-groups:
   - 🇯🇵 日本 Fastly节点
   - 🇺🇸 美国 Fastly节点 2
   - 🇨🇦 加拿大 安大略省多伦多Fastly节点
+  - 🇩🇪 DE德国(mibei77.com 米贝节点分享)
+  - 🇩🇪 DE德国(mibei77.com 米贝节点分享) 2
+  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) (2)
+  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 2 (2)
+  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 3 (2)
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 5 (2)
   - 🇺🇸_US_美国 (2)
   - 🇵🇱_PL_波兰->🇺🇸_US_美国
   - 🇳🇱_NL_荷兰
@@ -5191,15 +5191,9 @@ proxy-groups:
   - 🇨🇾_CY_塞浦路斯
   - 🇷🇺_RU_俄罗斯
   - 🇺🇸 US美国(mibei77.com 米贝节点分享)
-  - 🇭🇰 HK香港(mibei77.com 米贝节点分享)
-  - 🇸🇬 SG新加坡(mibei77.com 米贝节点分享)
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 2
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 4
-  - 🇦🇹 奥地利(mibei77.com 米贝节点分享)
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) (2)
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 2 (2)
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 3
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 4 (2)
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 4
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 5
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 6
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 7
@@ -5207,6 +5201,9 @@ proxy-groups:
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 9
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 10
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 11
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 13
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 15
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 16
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 17
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 18
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 19
@@ -5215,6 +5212,7 @@ proxy-groups:
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 25
   - 🇺🇸 US美国(mibei77.com 米贝节点分享) 33
   - 🇨🇳 TW台湾(mibei77.com 米贝节点分享)
+  - 🇸🇬 SG新加坡(mibei77.com 米贝节点分享)
   - 🇸🇬 SG新加坡(mibei77.com 米贝节点分享) 2
   - 🇮🇳 IN印度(mibei77.com 米贝节点分享)
   - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 2
@@ -5223,6 +5221,8 @@ proxy-groups:
   - 🇲🇾 马来西亚(mibei77.com 米贝节点分享)
   - 🇲🇾 马来西亚(mibei77.com 米贝节点分享) 2
   - 🇲🇾 马来西亚(mibei77.com 米贝节点分享) 5
+  - 🇭🇰 HK香港(mibei77.com 米贝节点分享)
+  - 🇦🇹 奥地利(mibei77.com 米贝节点分享)
   - 8元老牌专线机场：cczzuu.top
   - 🇧🇷 巴西圣保罗 CloudFlare节点
   - 🇺🇸 美国 CloudFlare节点
@@ -5270,12 +5270,6 @@ proxy-groups:
   - 🇺🇸US美國丨yoyapai.com_8
   - 🇺🇸US美國丨yoyapai.com_9
   - 免費節點丨yoyapai.com_3
-  - 🇩🇪 DE德国(mibei77.com 米贝节点分享)
-  - 🇩🇪 DE德国(mibei77.com 米贝节点分享) 2
-  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) (2)
-  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 2 (2)
-  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 3 (2)
-  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 5 (2)
   - 🇸🇬 新加坡 Fastly节点
   - 🇨🇦 加拿大 不列颠哥伦比亚省温哥华Fastly节点
   - 🇺🇸 美国 加利福尼亚州洛杉矶Fastly节点
@@ -5287,6 +5281,12 @@ proxy-groups:
   - 🇯🇵 日本 Fastly节点
   - 🇺🇸 美国 Fastly节点 2
   - 🇨🇦 加拿大 安大略省多伦多Fastly节点
+  - 🇩🇪 DE德国(mibei77.com 米贝节点分享)
+  - 🇩🇪 DE德国(mibei77.com 米贝节点分享) 2
+  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) (2)
+  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 2 (2)
+  - 🇭🇰 HK香港(mibei77.com 米贝节点分享) 3 (2)
+  - 🇺🇸 US美国(mibei77.com 米贝节点分享) 5 (2)
   - 🇺🇸_US_美国 (2)
   - 🇵🇱_PL_波兰->🇺🇸_US_美国
   - 🇳🇱_NL_荷兰

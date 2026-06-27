@@ -9,11 +9,6 @@
 | Clash / Mihomo | YAML | `https://kunkun8888666.github.io/youyapai/output/clash.yaml` |
 | V2Ray | URI 列表 | `https://kunkun8888666.github.io/youyapai/output/v2ray.yaml` |
 
-## 数据来源
-
-- [yoyapai.com](https://yoyapai.com/category/mianfeijiedian)
-- [clash-rs.com](https://clash-rs.com/free-node/)
-
 ## 工作原理
 
 1. GitHub Actions 每日北京时间 07:00 自动执行爬虫脚本
