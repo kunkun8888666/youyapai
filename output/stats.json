@@ -1,8 +1,8 @@
 {
-  "clash_nodes": 3008,
-  "v2ray_nodes": 232,
-  "total_nodes": 3240,
-  "update_date": "2026-08-17",
+  "clash_nodes": 3101,
+  "v2ray_nodes": 190,
+  "total_nodes": 3291,
+  "update_date": "2026-08-18",
   "sources": [
     "yoyapai.com",
     "clash-rs.com",
@@ -12,15 +12,15 @@
   "source_count": 4,
   "retention_days": 3,
   "protocols": {
-    "trojan": 888,
-    "vmess": 101,
-    "vless": 1641,
-    "ss": 279,
-    "hysteria2": 10,
-    "tuic": 1,
-    "http": 297,
-    "socks5": 22,
-    "anytls": 1
+    "vless": 1585,
+    "vmess": 94,
+    "trojan": 1004,
+    "ss": 267,
+    "hysteria2": 13,
+    "anytls": 6,
+    "socks5": 21,
+    "http": 269,
+    "ssr": 32
   },
   "sources_status": {
     "yoyapai.com": {
